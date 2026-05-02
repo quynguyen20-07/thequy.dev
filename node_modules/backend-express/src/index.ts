@@ -35,6 +35,11 @@ app.get('*', (req: Request, res: Response) => {
   res.sendFile(path.join(frontendDistPath, 'index.html'));
 });
 
-app.listen(port, () => {
-  console.log(`Express API & Static Server is running on port ${port}`);
-});
+// Export for Vercel
+export default app;
+
+if (process.env.NODE_ENV !== 'production') {
+  app.listen(port, () => {
+    console.log(`Express API & Static Server is running on port ${port}`);
+  });
+}

@@ -7,10 +7,14 @@
     "backend-express"
   ],
   "scripts": {
-    "dev:ui": "cd frontend && yarn dev",
-    "dev:server": "cd backend-express && yarn dev",
+    "dev:ui": "yarn workspace frontend dev",
+    "dev:server": "yarn workspace backend-express dev",
     "build": "yarn workspace frontend build && yarn workspace backend-express build",
     "start": "yarn workspace backend-express start",
-    "migrate": "yarn workspace backend-express migrate"
+    "migrate": "yarn workspace backend-express migrate",
+    "dev:all": "concurrently \"yarn dev:ui\" \"yarn dev:server\""
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

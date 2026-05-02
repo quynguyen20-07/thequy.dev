@@ -1,5 +1,6 @@
 export interface Project {
   id: string;
+  slug: string;
   title: string;
   role: string;
   company: string;
@@ -37,6 +38,7 @@ export interface Experience {
 export const projects: Project[] = [
   {
     id: 'tripc-ai-platform',
+    slug: 'tripc-ai-platform',
     title: 'TripC AI Platform',
     role: 'Full-Stack Developer',
     company: 'ALLY AI JSC',
@@ -67,6 +69,7 @@ export const projects: Project[] = [
   },
   {
     id: 'roomsbooked',
+    slug: 'roomsbooked',
     title: 'RoomsBooked',
     role: 'Full-Stack Developer',
     company: 'CODING MONSTERS',
@@ -96,6 +99,7 @@ export const projects: Project[] = [
   },
   {
     id: 'devplus-lms',
+    slug: 'devplus-lms',
     title: 'DevPlus LMS',
     role: 'Full-Stack Developer',
     company: 'ST UNITED – DA NANG',
@@ -126,6 +130,7 @@ export const projects: Project[] = [
   },
   {
     id: 'ttxl-driving-test',
+    slug: 'ttxl-driving-test',
     title: 'TTXL – Driving Test Management System',
     role: 'Full-Stack Developer',
     company: 'ST UNITED – DA NANG',
@@ -155,6 +160,7 @@ export const projects: Project[] = [
   },
   {
     id: 'digieye-ai-camera',
+    slug: 'digieye-ai-camera',
     title: 'DigiEye AI Camera System',
     role: 'Full-Stack Developer',
     company: 'ST UNITED – DA NANG',
