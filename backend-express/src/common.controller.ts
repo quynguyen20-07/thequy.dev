@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { CommonService } from './common.service';
-import { IdParam } from './types/request';
+import { CommonService } from '@app/common.service';
+import { IdParam } from '@app/types/request';
 
 const commonService = new CommonService();
 

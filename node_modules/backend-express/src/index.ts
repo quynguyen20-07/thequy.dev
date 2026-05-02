@@ -4,12 +4,12 @@ import path from 'path';
 import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 
-import { requireAuth, requireRole } from './auth/auth.middleware';
-import { ProjectController } from './project.controller';
-import { AuthController } from './auth/auth.controller';
-import { CommonController } from './common.controller';
-import { loggerMiddleware } from './middlewares/logger.middleware';
-import { specs } from './swagger';
+import { requireAuth, requireRole } from '@app/auth/auth.middleware';
+import { ProjectController } from '@app/project.controller';
+import { AuthController } from '@app/auth/auth.controller';
+import { CommonController } from '@app/common.controller';
+import { loggerMiddleware } from '@app/middlewares/logger.middleware';
+import { specs } from '@app/swagger';
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -27,16 +27,31 @@ const authController = new AuthController();
 const commonController = new CommonController();
 
 // Auth routes
-app.post('/api/auth/login', (req: Request, res: Response) => authController.login(req, res));
+app.post('/api/auth/login', (req: any, res: any) => authController.login(req, res));
 
 // Public API routes
-app.get('/api/projects', (req: Request, res: Response) => projectController.getProjects(req, res));
-app.get('/api/experiences', (req: Request, res: Response) => commonController.getExperiences(req, res));
-app.get('/api/skills', (req: Request, res: Response) => commonController.getSkills(req, res));
-app.get('/api/profile', (req: Request, res: Response) => commonController.getProfile(req, res));
+app.get('/api/projects', (req: any, res: any) => projectController.getProjects(req, res));
+app.get('/api/experiences', (req: any, res: any) => commonController.getExperiences(req, res));
+app.get('/api/skills', (req: any, res: any) => commonController.getSkills(req, res));
+app.get('/api/profile', (req: any, res: any) => commonController.getProfile(req, res));
 
 // Protected admin API routes
-app.post('/api/projects', requireAuth, requireRole('admin'), (req: Request, res: Response) => projectController.createProject(req, res));
+app.post('/api/projects', requireAuth, requireRole('ADMIN'), (req: any, res: any) => projectController.createProject(req, res));
+app.put('/api/projects/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => projectController.updateProject(req, res));
+app.delete('/api/projects/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => projectController.deleteProject(req, res));
+
+app.post('/api/experiences', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.createExperience(req, res));
+app.put('/api/experiences/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.updateExperience(req, res));
+app.delete('/api/experiences/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.deleteExperience(req, res));
+
+app.post('/api/skills', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.createSkill(req, res));
+app.put('/api/skills/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.updateSkill(req, res));
+app.delete('/api/skills/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.deleteSkill(req, res));
+
+app.put('/api/profile/:id', requireAuth, requireRole('ADMIN'), (req: any, res: any) => commonController.updateProfile(req, res));
+
+
+
 
 // Serve Frontend Static Files
 const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');

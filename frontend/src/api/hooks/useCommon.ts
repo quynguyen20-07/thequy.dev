@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query';
-import { api } from '../axiosInstance';
-import type { Skills, Experience } from '../../data/projects';
+import { api } from '@app/api/axiosInstance';
+import type { Skills, Experience } from '@app/data/projects';
 
 export const useExperiences = () => {
   return useQuery<Experience[]>({

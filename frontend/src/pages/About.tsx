@@ -1,5 +1,5 @@
-import SEO from '../components/SEO'
-import { useExperiences, useSkills } from '../api/hooks/useCommon'
+import SEO from '@app/components/SEO'
+import { useExperiences, useSkills } from '@app/api/hooks/useCommon'
 
 
 const highlights = [

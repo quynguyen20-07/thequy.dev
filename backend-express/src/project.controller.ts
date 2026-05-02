@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import { ProjectService } from './project.service';
+import { ProjectService } from '@app/project.service';
 import { z } from 'zod';
-import { IdParam } from './types/request';
+import { IdParam } from '@app/types/request';
 
 const projectService = new ProjectService();
 
@@ -79,9 +79,15 @@ export class ProjectController {
       const project = await projectService.createProject(validData);
       res.status(201).json(project);
     } catch (error) {
-      res.status(400).json({ error: 'Validation failed', details: error });
+      if (error instanceof z.ZodError) {
+        const message = error.issues.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
+        return res.status(400).json({ error: message });
+      }
+      res.status(400).json({ error: 'Validation failed' });
     }
+
   }
+
 
   async updateProject(req: Request<IdParam>, res: Response) {
     try {

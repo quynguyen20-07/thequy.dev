@@ -8,8 +8,16 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "ignoreDeprecations": "6.0",
+
+    "baseUrl": ".",
+
+    "paths": {
+      "@app/*": ["src/*"]
+    }
   },
+
   "include": ["src/**/*"],
   "exclude": ["src/scripts/**/*"]
 }
