@@ -1,0 +1,53 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Profile {
+  id       String  @id @default(auto()) @map("_id") @db.ObjectId
+  name     String
+  role     String
+  bio      String
+  email    String
+  github   String?
+  linkedin String?
+}
+
+model Project {
+  id               String   @id @default(auto()) @map("_id") @db.ObjectId
+  slug             String   @unique
+  title            String
+  role             String
+  company          String
+  period           String
+  shortDescription String
+  description      String
+  responsibilities String[]
+  achievements     String[]
+  tech             String[]
+  category         String
+  featured         Boolean  @default(false)
+  color            String
+  icon             String
+  link             String?
+}
+
+model Experience {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  company     String
+  role        String
+  period      String
+  current     Boolean  @default(false)
+  description String
+  tech        String[]
+}
+
+model Skills {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  category  String   @unique
+  items     String[]
+}

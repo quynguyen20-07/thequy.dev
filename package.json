@@ -1,28 +1,20 @@
 {
-  "name": "quynguyen",
+  "name": "quynguyen-monorepo",
+  "version": "1.0.0",
   "private": true,
-  "version": "0.0.0",
-  "type": "module",
+  "workspaces": [
+    "frontend",
+    "backend-express"
+  ],
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
-    "preview": "vite preview"
+    "dev:ui": "yarn workspace frontend dev",
+    "dev:server": "yarn workspace backend-express dev",
+    "build": "yarn workspace frontend build && yarn workspace backend-express build",
+    "start": "yarn workspace backend-express start",
+    "migrate": "yarn workspace backend-express migrate",
+    "dev:all": "concurrently \"yarn dev:ui\" \"yarn dev:server\""
   },
   "devDependencies": {
-    "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
-    "@vitejs/plugin-react-swc": "^4.3.0",
-    "autoprefixer": "^10.5.0",
-    "postcss": "^8.5.13",
-    "tailwindcss": "^4.2.4",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.10"
-  },
-  "dependencies": {
-    "@tailwindcss/vite": "^4.2.4",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0",
-    "react-helmet-async": "^3.0.0",
-    "react-router-dom": "^7.14.2"
+    "concurrently": "^8.2.2"
   }
 }
