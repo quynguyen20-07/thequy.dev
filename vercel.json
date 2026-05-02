@@ -6,8 +6,12 @@
       "destination": "/api/index"
     },
     {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
       "source": "/(.*)",
-      "destination": "/$1"
+      "destination": "/index.html"
     }
   ],
   "functions": {
