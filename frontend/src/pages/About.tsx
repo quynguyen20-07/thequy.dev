@@ -147,10 +147,15 @@ export default function About() {
                 </p>
                 <p>
                   Currently working at{" "}
-                  <strong className="text-accent-400">ALLY AI JSC</strong> where
-                  I build the TripC.ai travel platform — an AI-powered
-                  e-commerce system with personalized recommendations and
-                  automated booking processing.
+                  <strong className="text-accent-400">Unitech Dach</strong>,
+                  building digital solutions for enterprise and supply‑chain
+                  management: tracking container volumes sold, analyzing
+                  regional performance, monitoring KPIs, generating automated
+                  statistical reports and alerts when targets are missed. I
+                  design real‑time data collection pipelines, analytical
+                  dashboards, AI forecasting modules and resource‑allocation
+                  tools, while ensuring security, scalability and seamless
+                  integration with existing business processes.
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
