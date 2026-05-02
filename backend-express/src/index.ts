@@ -1,9 +1,12 @@
+import 'dotenv/config';
 import express, { Request, Response } from 'express';
-import cors from 'cors';
 import path from 'path';
+import cors from 'cors';
+
+import { requireAuth, requireRole } from './auth/auth.middleware';
 import { ProjectController } from './project.controller';
 import { AuthController } from './auth/auth.controller';
-import { requireAuth, requireRole } from './auth/auth.middleware';
+
 
 const app = express();
 const port = process.env.PORT || 3000;
@@ -24,7 +27,7 @@ app.get('/api/projects', (req: Request, res: Response) => projectController.getP
 app.post('/api/projects', requireAuth, requireRole('admin'), (req: Request, res: Response) => projectController.createProject(req, res));
 
 // Serve Frontend Static Files
-const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');
 app.use(express.static(frontendDistPath));
 
 // Catch-all route to serve the React App (for client-side routing)

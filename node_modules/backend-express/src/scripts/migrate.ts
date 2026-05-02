@@ -1,10 +1,15 @@
-import { PrismaClient } from '@prisma/client';
-import { projects, experiences, skills } from '../../frontend/src/data/projects';
+import { PrismaClient } from "@prisma/client";
+
+import {
+  projects,
+  experiences,
+  skills,
+} from "../../../frontend/src/data/projects";
 
 const prisma = new PrismaClient();
 
 async function runMigration() {
-  console.log('Starting data migration to MongoDB...');
+  console.log("Starting data migration to MongoDB...");
 
   // 1. Migrate Projects
   for (const proj of projects) {
@@ -24,7 +29,7 @@ async function runMigration() {
         featured: proj.featured,
         color: proj.color,
         icon: proj.icon,
-        link: proj.link
+        link: proj.link,
       },
       create: {
         slug: proj.id,
@@ -41,8 +46,8 @@ async function runMigration() {
         featured: proj.featured,
         color: proj.color,
         icon: proj.icon,
-        link: proj.link
-      }
+        link: proj.link,
+      },
     });
   }
   console.log(`Migrated ${projects.length} projects.`);
@@ -50,7 +55,7 @@ async function runMigration() {
   // 2. Migrate Experiences
   for (const exp of experiences) {
     const existing = await prisma.experience.findFirst({
-      where: { company: exp.company, role: exp.role }
+      where: { company: exp.company, role: exp.role },
     });
 
     if (!existing) {
@@ -61,8 +66,8 @@ async function runMigration() {
           period: exp.period,
           current: exp.current,
           description: exp.description,
-          tech: exp.tech
-        }
+          tech: exp.tech,
+        },
       });
     }
   }
@@ -73,16 +78,16 @@ async function runMigration() {
     await prisma.skills.upsert({
       where: { category },
       update: { items: items as string[] },
-      create: { category, items: items as string[] }
+      create: { category, items: items as string[] },
     });
   }
-  console.log('Migrated skills.');
+  console.log("Migrated skills.");
 
-  console.log('Migration complete!');
+  console.log("Migration complete!");
 }
 
 runMigration()
-  .catch(e => console.error(e))
+  .catch((e) => console.error(e))
   .finally(async () => {
     await prisma.$disconnect();
   });

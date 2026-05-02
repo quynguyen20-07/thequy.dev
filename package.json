@@ -7,7 +7,10 @@
     "backend-express"
   ],
   "scripts": {
-    "dev:frontend": "yarn workspace frontend dev",
-    "dev:backend": "yarn workspace backend-express dev"
+    "dev:ui": "cd frontend && yarn dev",
+    "dev:server": "cd backend-express && yarn dev",
+    "build": "yarn workspace frontend build && yarn workspace backend-express build",
+    "start": "yarn workspace backend-express start",
+    "migrate": "yarn workspace backend-express migrate"
   }
 }
