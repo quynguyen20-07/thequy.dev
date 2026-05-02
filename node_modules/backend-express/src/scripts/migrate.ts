@@ -6,8 +6,8 @@ async function runMigration() {
   console.log("Starting data migration to MongoDB...");
 
   // Load data dynamically to avoid ESM/CJS issues
-  const { projects, experiences, skills } = await import("../../../frontend/src/data/projects");
-
+  const { projects, experiences, skills } =
+    await import("../../../frontend/src/data/projects");
 
   // 1. Migrate Projects
   for (const proj of projects) {
@@ -73,10 +73,13 @@ async function runMigration() {
 
   // 3. Migrate Skills
   for (const [category, items] of Object.entries(skills)) {
-    await prisma.skills.upsert({
+    await prisma.skill.upsert({
       where: { category },
-      update: { items: items as string[] },
-      create: { category, items: items as string[] },
+      update: { items },
+      create: {
+        category,
+        items,
+      },
     });
   }
   console.log("Migrated skills.");
