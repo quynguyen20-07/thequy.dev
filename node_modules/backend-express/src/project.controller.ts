@@ -23,6 +23,17 @@ const CreateProjectSchema = z.object({
 });
 
 export class ProjectController {
+  /**
+   * @openapi
+   * /api/projects:
+   *   get:
+   *     tags:
+   *       - Projects
+   *     summary: Get all projects
+   *     responses:
+   *       200:
+   *         description: List of projects
+   */
   async getProjects(req: Request, res: Response) {
     try {
       const projects = await projectService.getAllProjects();
@@ -32,6 +43,33 @@ export class ProjectController {
     }
   }
 
+  /**
+   * @openapi
+   * /api/projects:
+   *   post:
+   *     tags:
+   *       - Projects
+   *     summary: Create a new project
+   *     security:
+   *       - bearerAuth: []
+   *     requestBody:
+   *       required: true
+   *       content:
+   *         application/json:
+   *           schema:
+   *             type: object
+   *             required:
+   *               - slug
+   *               - title
+   *               - company
+   *             properties:
+   *               slug: { type: string }
+   *               title: { type: string }
+   *               company: { type: string }
+   *     responses:
+   *       201:
+   *         description: Project created
+   */
   async createProject(req: Request, res: Response) {
     try {
       const validData = CreateProjectSchema.parse(req.body);

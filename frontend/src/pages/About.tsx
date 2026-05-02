@@ -1,6 +1,6 @@
-// src/pages/About.jsx
 import SEO from '../components/SEO'
-import { experiences, skills } from '../data/projects'
+import { useExperiences, useSkills } from '../api/hooks/useCommon'
+
 
 const highlights = [
   {
@@ -57,8 +57,20 @@ const education = [
 ]
 
 export default function About() {
+  const { data: expData = [], isLoading: expLoading } = useExperiences();
+  const { data: skillsData, isLoading: skillsLoading } = useSkills();
+
+  const experiences = Array.isArray(expData) ? expData : [];
+  const skills = skillsData || { languages: [], backend: [], frontend: [], databases: [], devops: [], tools: [] };
+
+  if (expLoading || skillsLoading || !skillsData) {
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+  }
+
+
   return (
     <>
+
       <SEO
         title="About · Fullstack Developer Node.js NestJS Vietnam"
         description="The Quy Nguyen is a Fullstack Developer with 3.5+ years experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, TypeScript, and React. Based in Da Nang, Vietnam."
@@ -132,7 +144,7 @@ export default function About() {
           <section aria-label="Work experience timeline">
             <h2 className="text-2xl font-bold text-white mb-8">Work Experience</h2>
             <ol className="relative space-y-6" aria-label="Timeline">
-              {experiences.map((exp, i) => (
+              {experiences?.map((exp, i) => (
                 <li key={i} className="relative pl-8">
                   {/* Timeline line */}
                   {i < experiences.length - 1 && (
@@ -165,7 +177,7 @@ export default function About() {
                     </div>
                     <p className="text-slate-400 text-sm mb-3">{exp.description}</p>
                     <ul className="flex flex-wrap gap-1.5" role="list">
-                      {exp.tech.map((t) => (
+                      {exp?.tech?.map((t: string) => (
                         <li key={t}>
                           <span className="tag text-xs">{t}</span>
                         </li>
@@ -198,7 +210,7 @@ export default function About() {
                     {label}
                   </h3>
                   <ul className="flex flex-wrap gap-1.5" role="list">
-                    {items.map((item) => (
+                    {items?.map((item: string) => (
                       <li key={item}>
                         <span className="tag text-xs">{item}</span>
                       </li>

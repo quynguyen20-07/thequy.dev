@@ -14,7 +14,7 @@ export const useProjects = () => {
 
 export const useCreateProject = () => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: async (newProject: Partial<Project>) => {
       const { data } = await api.post('/projects', newProject);

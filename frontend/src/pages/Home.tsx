@@ -1,9 +1,7 @@
-// src/pages/Home.jsx
 import { Link } from 'react-router-dom'
 import SEO from '../components/SEO'
-import { projects, skills } from '../data/projects'
-
-const featuredProjects = projects.filter((p) => p.featured).slice(0, 3)
+import { useProjects } from '../api/hooks/useProjects'
+import { useSkills } from '../api/hooks/useCommon'
 
 const stats = [
   { value: '3.5+', label: 'Years Experience' },
@@ -13,6 +11,18 @@ const stats = [
 ]
 
 export default function Home() {
+  const { data: projects = [], isLoading: projectsLoading } = useProjects();
+  const { data: skills, isLoading: skillsLoading } = useSkills();
+  if (projectsLoading || skillsLoading || !skills) {
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+  }
+
+  const featuredProjects = Array.isArray(projects)
+    ? projects.filter((p: any) => p.featured).slice(0, 3)
+    : [];
+
+
+
   return (
     <>
       <SEO
@@ -121,7 +131,7 @@ export default function Home() {
                   </div>
                 </div>
                 <div className="grid grid-cols-2 gap-3">
-                  {stats.map(({ value, label }) => (
+                  {stats?.map(({ value, label }) => (
                     <div key={label} className="bg-white/5 rounded-xl p-3 text-center">
                       <div className="text-primary-400 font-black text-xl">{value}</div>
                       <div className="text-slate-500 text-xs">{label}</div>
@@ -164,7 +174,7 @@ export default function Home() {
         </header>
 
         <div className="grid md:grid-cols-3 gap-6 mb-8">
-          {featuredProjects.map((project) => (
+          {featuredProjects?.map((project) => (
             <div
               key={project.id}
               className="card group relative overflow-hidden hover:border-primary-500/30 hover:-translate-y-1 hover:shadow-2xl hover:shadow-primary-500/10 transition-all duration-300"
@@ -181,11 +191,11 @@ export default function Home() {
               </div>
               <p className="text-slate-400 text-sm leading-relaxed mb-4">{project.shortDescription}</p>
               <div className="flex flex-wrap gap-1.5">
-                {project.tech.slice(0, 4).map((t) => (
+                {project?.tech?.slice(0, 4)?.map((t) => (
                   <span key={t} className="tag text-xs">{t}</span>
                 ))}
-                {project.tech.length > 4 && (
-                  <span className="tag text-xs">+{project.tech.length - 4}</span>
+                {project?.tech?.length > 4 && (
+                  <span className="tag text-xs">+{project?.tech?.length - 4}</span>
                 )}
               </div>
             </div>
@@ -226,7 +236,7 @@ export default function Home() {
                 <span role="img" aria-hidden="true">{icon}</span> {label}
               </h3>
               <ul className="flex flex-wrap gap-1.5" role="list">
-                {items.map((item) => (
+                {items?.map((item) => (
                   <li key={item}>
                     <span className="tag text-xs">{item}</span>
                   </li>

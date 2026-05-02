@@ -1,15 +1,13 @@
 import { PrismaClient } from "@prisma/client";
 
-import {
-  projects,
-  experiences,
-  skills,
-} from "../../../frontend/src/data/projects";
-
 const prisma = new PrismaClient();
 
 async function runMigration() {
   console.log("Starting data migration to MongoDB...");
+
+  // Load data dynamically to avoid ESM/CJS issues
+  const { projects, experiences, skills } = await import("../../../frontend/src/data/projects");
+
 
   // 1. Migrate Projects
   for (const proj of projects) {
