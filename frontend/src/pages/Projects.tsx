@@ -1,21 +1,29 @@
-// src/pages/Projects.tsx
 import { useState } from 'react'
 import SEO from '../components/SEO'
 import ProjectCard from '../components/ProjectCard'
-import { projects } from '../data/projects'
-
-const categories = ['All', ...Array.from(new Set(projects.map((p) => p.category)))]
+import { useProjects } from '../api/hooks/useProjects'
 
 export default function Projects() {
+  const { data: projectsData = [], isLoading } = useProjects()
   const [activeCategory, setActiveCategory] = useState<string>('All')
+
+  if (isLoading) {
+    return <div className="min-h-screen flex items-center justify-center text-white">Loading...</div>;
+  }
+
+  const projects = Array.isArray(projectsData) ? projectsData : [];
+  const categories = ['All', ...Array.from(new Set(projects.map((p: any) => p.category)))]
 
   const filtered =
     activeCategory === 'All'
       ? projects
-      : projects.filter((p) => p.category === activeCategory)
+      : projects.filter((p: any) => p.category === activeCategory)
+
+
 
   return (
     <>
+
       <SEO
         title="Projects · Node.js & NestJS Developer Vietnam"
         description="Explore The Quy Nguyen's portfolio projects: TripC AI Platform, RoomsBooked hotel booking system, DevPlus LMS, Driving Test Management System, and DigiEye AI Camera. Built with NestJS, React, PostgreSQL, Redis, and AWS."
@@ -42,15 +50,15 @@ export default function Projects() {
         {/* Filter Tabs */}
         <section className="max-w-6xl mx-auto px-4 sm:px-6 mb-10" aria-label="Project filters">
           <div className="flex flex-wrap gap-2 justify-center" role="tablist" aria-label="Filter by category">
-            {categories.map((cat) => (
+            {categories?.map((cat) => (
               <button
                 key={cat}
                 role="tab"
                 aria-selected={activeCategory === cat}
                 onClick={() => setActiveCategory(cat)}
                 className={`px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 ${activeCategory === cat
-                    ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/30'
-                    : 'glass text-slate-400 hover:text-white hover:bg-white/10'
+                  ? 'bg-primary-600 text-white shadow-lg shadow-primary-600/30'
+                  : 'glass text-slate-400 hover:text-white hover:bg-white/10'
                   }`}
               >
                 {cat}
@@ -66,7 +74,7 @@ export default function Projects() {
           role="tabpanel"
         >
           <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-6">
-            {filtered.map((project) => (
+            {filtered?.map((project) => (
               <ProjectCard key={project.id} project={project} />
             ))}
           </div>

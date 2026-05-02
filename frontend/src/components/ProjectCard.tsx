@@ -53,7 +53,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Tech Stack */}
       <div className="flex flex-wrap gap-1.5 mb-4">
-        {project.tech.map((t) => (
+        {project?.tech?.map((t) => (
           <span key={t} className="tag text-xs">
             {t}
           </span>
@@ -85,7 +85,7 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           className="space-y-2 mt-2 animate-fade-in"
           role="list"
         >
-          {project.achievements.map((a, i) => (
+          {project?.achievements?.map((a, i) => (
             <li key={i} className="flex items-start gap-2 text-xs text-slate-400">
               <span className="w-1.5 h-1.5 rounded-full bg-accent-400 mt-1.5 shrink-0" aria-hidden="true" />
               {a}
