@@ -1,0 +1,241 @@
+// src/pages/About.jsx
+import SEO from '../components/SEO'
+import { experiences, skills } from '../data/projects'
+
+const highlights = [
+  {
+    icon: '⚡',
+    title: 'REST API Design',
+    description: 'Expert in designing scalable RESTful APIs with proper authentication, authorization, and documentation.',
+    color: 'text-yellow-400',
+  },
+  {
+    icon: '🗄️',
+    title: 'Redis Caching',
+    description: 'Implemented Redis caching strategies that reduced API response times by 40–50% across multiple production systems.',
+    color: 'text-red-400',
+  },
+  {
+    icon: '🐳',
+    title: 'Docker + AWS',
+    description: 'Production deployments with Docker containers on AWS EC2/ECR, S3, and Route 53 with zero-downtime deploys.',
+    color: 'text-blue-400',
+  },
+  {
+    icon: '🔄',
+    title: 'CI/CD Pipelines',
+    description: 'Built automated CI/CD pipelines with GitLab, cutting release cycles from hours to minutes.',
+    color: 'text-green-400',
+  },
+  {
+    icon: '🤖',
+    title: 'AI Integration',
+    description: 'Integrated AI agents for personalized travel recommendations and automated booking processing.',
+    color: 'text-purple-400',
+  },
+  {
+    icon: '📡',
+    title: 'Real-time Systems',
+    description: 'Built real-time communication with Socket.IO and Firebase FCM for notifications and live tracking.',
+    color: 'text-cyan-400',
+  },
+]
+
+const education = [
+  {
+    degree: 'Bachelor of Science – Computer Science',
+    institution: 'University of Greenwich Da Nang',
+    period: '2018 – 2023',
+    note: 'Third-Class Bachelor of Science (22/02/2023). Focus: SDLC, Agile/Scrum, software development, and AI.',
+  },
+  {
+    degree: 'Higher National Diploma – BTEC Computing',
+    institution: 'FPT Greenwich',
+    period: '08/2021',
+    note: 'Completed an approved HND programme at FPT Greenwich.',
+  },
+]
+
+export default function About() {
+  return (
+    <>
+      <SEO
+        title="About · Fullstack Developer Node.js NestJS Vietnam"
+        description="The Quy Nguyen is a Fullstack Developer with 3.5+ years experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, TypeScript, and React. Based in Da Nang, Vietnam."
+        keywords="about The Quy Nguyen, NestJS developer Vietnam, Node.js fullstack engineer Da Nang, fullstack developer Vietnam biography, TypeScript backend developer, Redis caching expert, Docker AWS NestJS developer"
+        path="/about"
+      />
+
+      <div className="pt-16">
+        {/* Header */}
+        <header className="relative py-20 px-4 sm:px-6 overflow-hidden">
+          <div className="absolute inset-0 hero-glow pointer-events-none" aria-hidden="true" />
+          <div className="max-w-6xl mx-auto">
+            <span className="tag-accent mb-4 inline-block">About Me</span>
+            <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 max-w-3xl">
+              About{' '}
+              <span className="gradient-text">The Quy Nguyen</span>
+            </h1>
+            <p className="text-slate-400 text-lg max-w-3xl leading-relaxed">
+              Fullstack Developer with <strong className="text-white">3.5+ years of experience</strong> in building booking systems, AI platforms, and scalable backend services using{' '}
+              <strong className="text-primary-400">Node.js</strong>, <strong className="text-primary-400">NestJS</strong>, and <strong className="text-primary-400">React</strong>.
+            </p>
+          </div>
+        </header>
+
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
+
+          {/* Bio Section */}
+          <section className="grid lg:grid-cols-2 gap-12 items-start" aria-label="Biography">
+            <div>
+              <h2 className="text-2xl font-bold text-white mb-4">Who I Am</h2>
+              <div className="space-y-4 text-slate-400 leading-relaxed">
+                <p>
+                  I'm a <strong className="text-white">Full-Stack Developer (Node.js)</strong> with over 3.5 years of experience building real-world booking and service platforms. My core focus is developing stable, high-performance, and scalable backend systems.
+                </p>
+                <p>
+                  I specialize in designing <strong className="text-primary-400">RESTful APIs</strong>, complex booking workflows, payment-related logic, supplier management systems, and content platforms. I have hands-on experience with <strong className="text-primary-400">Docker, GitLab CI/CD, AWS</strong>, and Firebase to deliver reliable production-ready solutions.
+                </p>
+                <p>
+                  Currently working at <strong className="text-accent-400">ALLY AI JSC</strong> where I build the TripC.ai travel platform — an AI-powered e-commerce system with personalized recommendations and automated booking processing.
+                </p>
+              </div>
+              <div className="mt-6 flex flex-wrap gap-3">
+                <div className="glass rounded-xl px-4 py-2">
+                  <div className="text-slate-500 text-xs">Location</div>
+                  <div className="text-white text-sm font-medium">🇻🇳 Da Nang, Vietnam</div>
+                </div>
+                <div className="glass rounded-xl px-4 py-2">
+                  <div className="text-slate-500 text-xs">Experience</div>
+                  <div className="text-white text-sm font-medium">3.5+ Years</div>
+                </div>
+                <div className="glass rounded-xl px-4 py-2">
+                  <div className="text-slate-500 text-xs">Status</div>
+                  <div className="text-accent-400 text-sm font-medium">Open to Work</div>
+                </div>
+              </div>
+            </div>
+
+            {/* Key Highlights */}
+            <div className="grid grid-cols-2 gap-4" aria-label="Key skills and highlights">
+              {highlights.map(({ icon, title, description, color }) => (
+                <article key={title} className="card hover:border-white/20 transition-all duration-300">
+                  <span className={`text-2xl mb-2 block ${color}`} role="img" aria-label={title}>{icon}</span>
+                  <h3 className="text-white font-bold text-sm mb-1">{title}</h3>
+                  <p className="text-slate-500 text-xs leading-relaxed">{description}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Experience Timeline */}
+          <section aria-label="Work experience timeline">
+            <h2 className="text-2xl font-bold text-white mb-8">Work Experience</h2>
+            <ol className="relative space-y-6" aria-label="Timeline">
+              {experiences.map((exp, i) => (
+                <li key={i} className="relative pl-8">
+                  {/* Timeline line */}
+                  {i < experiences.length - 1 && (
+                    <div className="absolute left-2.5 top-8 bottom-0 w-px bg-white/10" aria-hidden="true" />
+                  )}
+                  {/* Dot */}
+                  <div
+                    className={`absolute left-0 top-1.5 w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                      exp.current
+                        ? 'border-accent-400 bg-accent-400/20'
+                        : 'border-primary-500/50 bg-primary-500/10'
+                    }`}
+                    aria-hidden="true"
+                  >
+                    {exp.current && <span className="w-1.5 h-1.5 rounded-full bg-accent-400" />}
+                  </div>
+
+                  <article className="card hover:border-white/20 transition-all duration-300">
+                    <div className="flex flex-wrap items-start justify-between gap-3 mb-2">
+                      <div>
+                        <h3 className="text-white font-bold">{exp.role}</h3>
+                        <p className="text-primary-400 font-medium text-sm">{exp.company}</p>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-slate-500 text-xs">{exp.period}</span>
+                        {exp.current && (
+                          <span className="tag-accent text-xs py-0.5">Current</span>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-slate-400 text-sm mb-3">{exp.description}</p>
+                    <ul className="flex flex-wrap gap-1.5" role="list">
+                      {exp.tech.map((t) => (
+                        <li key={t}>
+                          <span className="tag text-xs">{t}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </article>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* Skills Section */}
+          <section aria-label="Technical skills">
+            <h2 className="text-2xl font-bold text-white mb-8">Technical Skills</h2>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[
+                { label: 'Languages', items: skills.languages, icon: '💻', color: 'from-blue-500/20 to-blue-600/10', border: 'border-blue-500/20' },
+                { label: 'Backend Frameworks', items: skills.backend, icon: '⚙️', color: 'from-purple-500/20 to-purple-600/10', border: 'border-purple-500/20' },
+                { label: 'Frontend', items: skills.frontend, icon: '🎨', color: 'from-pink-500/20 to-pink-600/10', border: 'border-pink-500/20' },
+                { label: 'Databases', items: skills.databases, icon: '🗄️', color: 'from-yellow-500/20 to-yellow-600/10', border: 'border-yellow-500/20' },
+                { label: 'DevOps & Cloud', items: skills.devops, icon: '☁️', color: 'from-cyan-500/20 to-cyan-600/10', border: 'border-cyan-500/20' },
+                { label: 'Tools & Methods', items: skills.tools, icon: '🔧', color: 'from-green-500/20 to-green-600/10', border: 'border-green-500/20' },
+              ].map(({ label, items, icon, color, border }) => (
+                <article
+                  key={label}
+                  className={`bg-gradient-to-br ${color} border ${border} rounded-2xl p-5 hover:scale-[1.02] transition-transform duration-300`}
+                >
+                  <h3 className="text-white font-bold text-sm mb-3 flex items-center gap-2">
+                    <span role="img" aria-hidden="true">{icon}</span>
+                    {label}
+                  </h3>
+                  <ul className="flex flex-wrap gap-1.5" role="list">
+                    {items.map((item) => (
+                      <li key={item}>
+                        <span className="tag text-xs">{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </section>
+
+          {/* Education */}
+          <section aria-label="Education">
+            <h2 className="text-2xl font-bold text-white mb-8">Education</h2>
+            <div className="grid sm:grid-cols-2 gap-6">
+              {education.map(({ degree, institution, period, note }) => (
+                <article key={degree} className="card hover:border-white/20 transition-all duration-300">
+                  <div className="flex items-start gap-3 mb-3">
+                    <div className="w-10 h-10 rounded-xl bg-primary-500/20 border border-primary-500/30 flex items-center justify-center shrink-0">
+                      <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l9-5-9-5-9 5 9 5z" />
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 14l6.16-3.422a12.083 12.083 0 01.665 6.479A11.952 11.952 0 0012 20.055a11.952 11.952 0 00-6.824-2.998 12.078 12.078 0 01.665-6.479L12 14z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <h3 className="text-white font-bold text-sm">{degree}</h3>
+                      <p className="text-primary-400 text-xs font-medium">{institution}</p>
+                      <p className="text-slate-500 text-xs">{period}</p>
+                    </div>
+                  </div>
+                  <p className="text-slate-500 text-xs leading-relaxed">{note}</p>
+                </article>
+              ))}
+            </div>
+          </section>
+
+        </div>
+      </div>
+    </>
+  )
+}
