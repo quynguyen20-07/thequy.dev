@@ -21,8 +21,15 @@ export default function ExperienceAdmin() {
     toast.promise(promise, {
       loading: 'Saving experience...',
       success: 'Experience saved successfully!',
-      error: (err: any) => err.response?.data?.error || 'Failed to save experience',
+      error: (err: any) => {
+        const data = err.response?.data;
+        if (data?.errors && Array.isArray(data.errors)) {
+          return data.errors.map((e: any) => e.message).join(', ');
+        }
+        return data?.message || 'Failed to save experience';
+      },
     });
+
 
 
     try {

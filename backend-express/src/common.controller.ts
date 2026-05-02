@@ -1,6 +1,8 @@
 import { Request, Response } from 'express';
 import { CommonService } from '@app/common.service';
 import { IdParam } from '@app/types/request';
+import { ExperienceSchema, SkillSchema, ProfileSchema } from '@app/validators/common.validator';
+import { handleValidationError } from '@app/utils/error-handler';
 
 const commonService = new CommonService();
 
@@ -56,13 +58,23 @@ export class CommonController {
 
   // Admin Endpoints
   async createExperience(req: Request, res: Response) {
-    const data = await commonService.createExperience(req.body);
-    res.status(201).json(data);
+    try {
+      const validData = ExperienceSchema.parse(req.body);
+      const data = await commonService.createExperience(validData);
+      res.status(201).json(data);
+    } catch (error) {
+      return handleValidationError(res, error);
+    }
   }
 
   async updateExperience(req: Request<IdParam>, res: Response) {
-    const data = await commonService.updateExperience(req.params.id, req.body);
-    res.json(data);
+    try {
+      const validData = ExperienceSchema.parse(req.body);
+      const data = await commonService.updateExperience(req.params.id, validData);
+      res.json(data);
+    } catch (error) {
+      return handleValidationError(res, error);
+    }
   }
 
   async deleteExperience(req: Request<IdParam>, res: Response) {
@@ -71,8 +83,13 @@ export class CommonController {
   }
 
   async createSkill(req: Request, res: Response) {
-    const data = await commonService.createSkill(req.body);
-    res.status(201).json(data);
+    try {
+      const validData = SkillSchema.parse(req.body);
+      const data = await commonService.createSkill(validData);
+      res.status(201).json(data);
+    } catch (error) {
+      return handleValidationError(res, error);
+    }
   }
 
   async updateSkill(req: Request<IdParam>, res: Response) {
@@ -86,8 +103,13 @@ export class CommonController {
   }
 
   async updateProfile(req: Request<IdParam>, res: Response) {
-    const data = await commonService.updateProfile(req.params.id, req.body);
-    res.json(data);
+    try {
+      const validData = ProfileSchema.parse(req.body);
+      const data = await commonService.updateProfile(req.params.id, validData);
+      res.json(data);
+    } catch (error) {
+      return handleValidationError(res, error);
+    }
   }
 }
 

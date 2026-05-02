@@ -1,28 +1,11 @@
 import { Request, Response } from 'express';
 import { ProjectService } from '@app/project.service';
-import { z } from 'zod';
 import { IdParam } from '@app/types/request';
+import { ProjectSchema } from '@app/validators/project.validator';
+import { handleValidationError } from '@app/utils/error-handler';
 
 const projectService = new ProjectService();
 
-
-const CreateProjectSchema = z.object({
-  slug: z.string(),
-  title: z.string(),
-  company: z.string(),
-  role: z.string(),
-  period: z.string(),
-  shortDescription: z.string(),
-  description: z.string(),
-  responsibilities: z.array(z.string()),
-  achievements: z.array(z.string()),
-  tech: z.array(z.string()),
-  category: z.string(),
-  featured: z.boolean().default(false),
-  color: z.string(),
-  icon: z.string(),
-  link: z.string().nullable().optional()
-});
 
 export class ProjectController {
 
@@ -75,16 +58,13 @@ export class ProjectController {
    */
   async createProject(req: Request, res: Response) {
     try {
-      const validData = CreateProjectSchema.parse(req.body);
+      const validData = ProjectSchema.parse(req.body);
       const project = await projectService.createProject(validData);
       res.status(201).json(project);
     } catch (error) {
-      if (error instanceof z.ZodError) {
-        const message = error.issues.map(e => `${e.path.join('.')}: ${e.message}`).join(', ');
-        return res.status(400).json({ error: message });
-      }
-      res.status(400).json({ error: 'Validation failed' });
+      return handleValidationError(res, error);
     }
+
 
   }
 

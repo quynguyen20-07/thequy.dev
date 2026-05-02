@@ -34,6 +34,10 @@ export default function ProfileAdmin() {
       <h1 className="text-3xl font-black text-white mb-8">Personal Profile</h1>
       <div className="glass p-8 rounded-3xl border border-white/5 max-w-2xl">
         <div className="space-y-6">
+          <div>
+            <label className="text-slate-400 text-sm mb-2 block">Avatar URL</label>
+            <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.avatar || ''} onChange={e => setFormData({...formData, avatar: e.target.value})} placeholder="https://..." />
+          </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div>
               <label className="text-slate-400 text-sm mb-2 block">Name</label>
@@ -44,14 +48,30 @@ export default function ProfileAdmin() {
               <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.role || ''} onChange={e => setFormData({...formData, role: e.target.value})} />
             </div>
           </div>
+
           <div>
             <label className="text-slate-400 text-sm mb-2 block">Email</label>
             <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.email || ''} onChange={e => setFormData({...formData, email: e.target.value})} />
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div>
+              <label className="text-slate-400 text-sm mb-2 block">Phone Number</label>
+              <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.phone || ''} onChange={e => setFormData({...formData, phone: e.target.value})} placeholder="+84 ..." />
+            </div>
+            <div>
+              <label className="text-slate-400 text-sm mb-2 block">Location</label>
+              <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.location || ''} onChange={e => setFormData({...formData, location: e.target.value})} placeholder="Hanoi, Vietnam" />
+            </div>
+          </div>
+          <div>
+            <label className="text-slate-400 text-sm mb-2 block">Resume/CV URL</label>
+            <input className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white" value={formData.resume || ''} onChange={e => setFormData({...formData, resume: e.target.value})} placeholder="https://drive.google.com/..." />
           </div>
           <div>
             <label className="text-slate-400 text-sm mb-2 block">Bio</label>
             <textarea className="w-full bg-white/5 border border-white/10 rounded-xl p-3 text-white h-32" value={formData.bio || ''} onChange={e => setFormData({...formData, bio: e.target.value})} />
           </div>
+
           <button onClick={handleSave} className="btn-primary w-full py-4 rounded-xl font-bold">Save Changes</button>
         </div>
       </div>

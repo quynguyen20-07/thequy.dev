@@ -22,9 +22,14 @@ export default function ProjectAdmin() {
       loading: 'Saving project...',
       success: 'Project saved successfully!',
       error: (err: any) => {
-        return err.response?.data?.error || 'Failed to save project';
+        const data = err.response?.data;
+        if (data?.errors && Array.isArray(data.errors)) {
+          return data.errors.map((e: any) => e.message).join(', ');
+        }
+        return data?.message || 'Failed to save project';
       },
     });
+
 
 
     try {
