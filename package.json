@@ -1,6 +1,7 @@
 {
   "name": "quynguyen-monorepo",
   "version": "1.0.0",
+  "main": "api/index.ts",
   "private": true,
   "workspaces": [
     "frontend",
