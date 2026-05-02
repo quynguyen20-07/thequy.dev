@@ -1,8 +1,10 @@
 import { Request, Response } from 'express';
 import { ProjectService } from './project.service';
 import { z } from 'zod';
+import { IdParam } from './types/request';
 
 const projectService = new ProjectService();
+
 
 const CreateProjectSchema = z.object({
   slug: z.string(),
@@ -23,6 +25,7 @@ const CreateProjectSchema = z.object({
 });
 
 export class ProjectController {
+
   /**
    * @openapi
    * /api/projects:
@@ -79,4 +82,27 @@ export class ProjectController {
       res.status(400).json({ error: 'Validation failed', details: error });
     }
   }
+
+  async updateProject(req: Request<IdParam>, res: Response) {
+    try {
+      const { id } = req.params;
+      const project = await projectService.updateProject(id, req.body);
+      res.json(project);
+    } catch (error) {
+      res.status(400).json({ error: 'Update failed' });
+    }
+  }
+
+  async deleteProject(req: Request<IdParam>, res: Response) {
+    try {
+      const { id } = req.params;
+      await projectService.deleteProject(id);
+      res.status(204).send();
+    } catch (error) {
+      res.status(400).json({ error: 'Delete failed' });
+    }
+  }
 }
+
+
+

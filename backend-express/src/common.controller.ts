@@ -1,9 +1,11 @@
 import { Request, Response } from 'express';
 import { CommonService } from './common.service';
+import { IdParam } from './types/request';
 
 const commonService = new CommonService();
 
 export class CommonController {
+
   /**
    * @openapi
    * /api/experiences:
@@ -51,4 +53,43 @@ export class CommonController {
       res.status(500).json({ error: 'Internal server error' });
     }
   }
+
+  // Admin Endpoints
+  async createExperience(req: Request, res: Response) {
+    const data = await commonService.createExperience(req.body);
+    res.status(201).json(data);
+  }
+
+  async updateExperience(req: Request<IdParam>, res: Response) {
+    const data = await commonService.updateExperience(req.params.id, req.body);
+    res.json(data);
+  }
+
+  async deleteExperience(req: Request<IdParam>, res: Response) {
+    await commonService.deleteExperience(req.params.id);
+    res.status(204).send();
+  }
+
+  async createSkill(req: Request, res: Response) {
+    const data = await commonService.createSkill(req.body);
+    res.status(201).json(data);
+  }
+
+  async updateSkill(req: Request<IdParam>, res: Response) {
+    const data = await commonService.updateSkill(req.params.id, req.body);
+    res.json(data);
+  }
+
+  async deleteSkill(req: Request<IdParam>, res: Response) {
+    await commonService.deleteSkill(req.params.id);
+    res.status(204).send();
+  }
+
+  async updateProfile(req: Request<IdParam>, res: Response) {
+    const data = await commonService.updateProfile(req.params.id, req.body);
+    res.json(data);
+  }
 }
+
+
+

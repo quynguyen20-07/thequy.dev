@@ -36,7 +36,21 @@ app.get('/api/skills', (req: Request, res: Response) => commonController.getSkil
 app.get('/api/profile', (req: Request, res: Response) => commonController.getProfile(req, res));
 
 // Protected admin API routes
-app.post('/api/projects', requireAuth, requireRole('admin'), (req: Request, res: Response) => projectController.createProject(req, res));
+app.post('/api/projects', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => projectController.createProject(req, res));
+app.put('/api/projects/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => projectController.updateProject(req, res));
+app.delete('/api/projects/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => projectController.deleteProject(req, res));
+
+app.post('/api/experiences', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.createExperience(req, res));
+app.put('/api/experiences/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.updateExperience(req, res));
+app.delete('/api/experiences/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.deleteExperience(req, res));
+
+app.post('/api/skills', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.createSkill(req, res));
+app.put('/api/skills/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.updateSkill(req, res));
+app.delete('/api/skills/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.deleteSkill(req, res));
+
+app.put('/api/profile/:id', requireAuth, requireRole('ADMIN'), (req: Request, res: Response) => commonController.updateProfile(req, res));
+
+
 
 // Serve Frontend Static Files
 const frontendDistPath = path.resolve(__dirname, '../../frontend/dist');

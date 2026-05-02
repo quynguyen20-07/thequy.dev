@@ -10,4 +10,18 @@ export class ProjectService {
   async createProject(data: any) {
     return prisma.project.create({ data });
   }
+
+  async updateProject(id: string, data: any) {
+    return prisma.project.update({
+      where: { id },
+      data,
+    });
+  }
+
+  async deleteProject(id: string) {
+    return prisma.project.delete({
+      where: { id },
+    });
+  }
 }
+
