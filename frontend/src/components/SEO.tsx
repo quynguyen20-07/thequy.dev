@@ -4,7 +4,7 @@
 
 import { Helmet } from 'react-helmet-async'
 
-const SITE_URL = 'https://thequynguyen.dev'
+const SITE_URL = 'https://thequyprofile.vercel.app'
 const OG_IMAGE = `${SITE_URL}/og-image.jpg`
 const SITE_NAME = 'The Quy Nguyen – Fullstack Developer'
 
