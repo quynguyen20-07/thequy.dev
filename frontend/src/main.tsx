@@ -3,7 +3,8 @@ import { createRoot } from 'react-dom/client'
 import { HelmetProvider } from 'react-helmet-async'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './index.css'
-import App from './App'
+import App from '@app/App'
+
 
 const queryClient = new QueryClient()
 

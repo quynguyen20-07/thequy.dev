@@ -4,10 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
+    "dev:server": "ts-node-dev -r tsconfig-paths/register --respawn --transpile-only --watch ../frontend/dist src/index.ts",
+    "dev": "concurrently \"cd ../frontend && yarn build:watch\" \"yarn dev:server\"",
     "build": "prisma generate && tsc",
     "start": "node dist/index.js",
     "migrate": "tsx src/scripts/migrate.ts",
+    "seed-admin": "tsx src/scripts/seed-admin.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,9 +25,11 @@
     "@types/node": "^25.6.0",
     "@types/swagger-jsdoc": "^6.0.4",
     "@types/swagger-ui-express": "^4.1.8",
+    "concurrently": "^9.2.1",
     "dotenv": "^17.4.2",
     "prisma": "^6.0.0",
     "ts-node-dev": "^2.0.0",
+    "tsconfig-paths": "^4.2.0",
     "tsx": "^4.21.0",
     "typescript": "^6.0.3"
   },

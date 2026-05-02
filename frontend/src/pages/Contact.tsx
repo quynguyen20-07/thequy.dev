@@ -1,6 +1,6 @@
 // src/pages/Contact.jsx
 import { useState } from 'react'
-import SEO from '../components/SEO'
+import SEO from '@app/components/SEO'
 
 const contactMethods = [
   {

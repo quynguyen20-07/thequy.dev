@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
-import SEO from '../components/SEO'
-import { useProjects } from '../api/hooks/useProjects'
-import { useSkills } from '../api/hooks/useCommon'
+import SEO from '@app/components/SEO'
+import { useProjects } from '@app/api/hooks/useProjects'
+import { useSkills } from '@app/api/hooks/useCommon'
 
 const stats = [
   { value: '3.5+', label: 'Years Experience' },

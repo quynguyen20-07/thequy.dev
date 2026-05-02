@@ -1,6 +1,8 @@
 // src/components/Navbar.jsx
 import { useState, useEffect } from 'react'
 import { NavLink, Link } from 'react-router-dom'
+import { useQuery } from '@tanstack/react-query'
+import { api } from '@app/api/axiosInstance'
 
 const navItems = [
   { path: '/', label: 'Home' },
@@ -10,7 +12,14 @@ const navItems = [
 ]
 
 export default function Navbar() {
+  const { data: profile } = useQuery<any>({
+    queryKey: ['profile'],
+    queryFn: () => api.get('/profile').then(res => res.data),
+    staleTime: 1000 * 60 * 5
+  })
+
   const [scrolled, setScrolled] = useState(false)
+
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
@@ -35,12 +44,17 @@ export default function Navbar() {
           className="flex items-center gap-2 group"
           aria-label="The Quy Nguyen – Home"
         >
-          <span className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold text-sm shadow-lg shadow-primary-600/40 group-hover:shadow-primary-500/60 transition-shadow">
-            Q
-          </span>
+          <div className="w-9 h-9 rounded-xl overflow-hidden bg-gradient-to-br from-primary-500 to-primary-700 flex items-center justify-center text-white font-bold shadow-lg shadow-primary-600/40 group-hover:shadow-primary-500/60 transition-all duration-300">
+            {profile?.avatar ? (
+              <img src={profile.avatar} alt="Profile" className="w-full h-full object-cover" />
+            ) : (
+              <span>Q</span>
+            )}
+          </div>
           <span className="font-bold text-white text-sm hidden sm:block">
-            The Quy <span className="text-primary-400">Nguyen</span>
+            {profile?.name || 'The Quy'} <span className="text-primary-400">{profile?.name ? '' : 'Nguyen'}</span>
           </span>
+
         </Link>
 
         {/* Desktop Nav */}

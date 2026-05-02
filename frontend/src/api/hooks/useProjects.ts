@@ -1,6 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../axiosInstance';
-import type { Project } from '../../data/projects';
+import { api } from '@app/api/axiosInstance';
+import type { Project } from '@app/data/projects';
 
 export const useProjects = () => {
   return useQuery<Project[]>({

@@ -1,7 +1,8 @@
 import { useState } from 'react'
-import SEO from '../components/SEO'
-import ProjectCard from '../components/ProjectCard'
-import { useProjects } from '../api/hooks/useProjects'
+import SEO from '@app/components/SEO'
+import ProjectCard from '@app/components/ProjectCard'
+import { useProjects } from '@app/api/hooks/useProjects'
+
 
 export default function Projects() {
   const { data: projectsData = [], isLoading } = useProjects()
