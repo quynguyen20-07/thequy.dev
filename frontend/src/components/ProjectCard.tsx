@@ -1,13 +1,13 @@
+import type { Project } from "@app/api/types/project";
 // src/components/ProjectCard.tsx
-import { useState } from 'react'
-import type { Project } from '../data/projects'
+import { useState } from "react";
 
 interface ProjectCardProps {
   project: Project;
 }
 
 export default function ProjectCard({ project }: ProjectCardProps) {
-  const [expanded, setExpanded] = useState(false)
+  const [expanded, setExpanded] = useState(false);
 
   return (
     <article
@@ -31,7 +31,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </span>
           <div>
             <span className="tag-accent text-xs mb-1">{project.category}</span>
-            <h2 className="text-white font-bold text-base leading-tight">{project.title}</h2>
+            <h2 className="text-white font-bold text-base leading-tight">
+              {project.title}
+            </h2>
           </div>
         </div>
         {project.featured && (
@@ -41,7 +43,9 @@ export default function ProjectCard({ project }: ProjectCardProps) {
 
       {/* Company & Period */}
       <div className="flex items-center gap-2 mb-3">
-        <span className="text-primary-400 text-xs font-medium">{project.company}</span>
+        <span className="text-primary-400 text-xs font-medium">
+          {project.company}
+        </span>
         <span className="text-slate-600">·</span>
         <span className="text-slate-500 text-xs">{project.period}</span>
       </div>
@@ -68,15 +72,20 @@ export default function ProjectCard({ project }: ProjectCardProps) {
         aria-controls={`achievements-${project.id}`}
       >
         <svg
-          className={`w-3.5 h-3.5 transition-transform duration-200 ${expanded ? 'rotate-90' : ''}`}
+          className={`w-3.5 h-3.5 transition-transform duration-200 ${expanded ? "rotate-90" : ""}`}
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
           aria-hidden="true"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M9 5l7 7-7 7"
+          />
         </svg>
-        {expanded ? 'Hide' : 'Show'} Key Achievements
+        {expanded ? "Hide" : "Show"} Key Achievements
       </button>
 
       {expanded && (
@@ -86,13 +95,19 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           role="list"
         >
           {project?.achievements?.map((a, i) => (
-            <li key={i} className="flex items-start gap-2 text-xs text-slate-400">
-              <span className="w-1.5 h-1.5 rounded-full bg-accent-400 mt-1.5 shrink-0" aria-hidden="true" />
+            <li
+              key={i}
+              className="flex items-start gap-2 text-xs text-slate-400"
+            >
+              <span
+                className="w-1.5 h-1.5 rounded-full bg-accent-400 mt-1.5 shrink-0"
+                aria-hidden="true"
+              />
               {a}
             </li>
           ))}
         </ul>
       )}
     </article>
-  )
+  );
 }
