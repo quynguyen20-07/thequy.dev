@@ -14,6 +14,24 @@ export const SkillSchema = z.object({
   items: z.array(z.string()).min(1, "Phải có ít nhất một kỹ năng"),
 });
 
+export const HighlightSchema = z.object({
+  icon: z.string().min(1, "Biểu tượng không được để trống"),
+  title: z.string().min(1, "Tiêu đề không được để trống"),
+  description: z.string().min(10, "Mô tả phải có ít nhất 10 ký tự"),
+  color: z
+    .string()
+    .regex(/^text-\w+-\d+$/, "Màu sắc phải là class Tailwind hợp lệ"),
+  order: z.number().int().min(0).optional(),
+});
+
+export const EducationSchema = z.object({
+  degree: z.string().min(1, "Bằng cấp không được để trống"),
+  institution: z.string().min(1, "Tên trường không được để trống"),
+  period: z.string().min(1, "Thời kỳ học tập là bắt buộc"),
+  note: z.string().min(10, "Ghi chú phải có ít nhất 10 ký tự"),
+  order: z.number().int().min(0).optional(),
+});
+
 export const ProfileSchema = z.object({
   name: z.string().min(1, "Họ tên không được để trống"),
   role: z.string().min(1, "Vị trí công việc là bắt buộc"),

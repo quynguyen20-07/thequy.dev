@@ -1,81 +1,46 @@
+import {
+  getHighlightsData,
+  getEducationData,
+  isAboutPageLoading,
+  getSkillsData,
+  getExperiencesData,
+  getSkillsByCategory,
+  formatDateRange,
+} from "@app/commons/helper/aboutUtils";
+import {
+  DEFAULT_HIGHLIGHTS,
+  DEFAULT_EDUCATION,
+  SKILL_CATEGORIES,
+  ABOUT_SEO,
+  PROFILE_INFO,
+} from "@app/commons/constant/about";
+import { useHighlights, useEducation } from "@app/api/hooks/useAdminCommon";
 import { useExperiences, useSkills } from "@app/api/hooks/useCommon";
+import PageHeader from "@app/components/PageHeader";
 import SEO from "@app/components/SEO";
-
-const highlights = [
-  {
-    icon: "⚡",
-    title: "REST API Design",
-    description:
-      "Expert in designing scalable RESTful APIs with proper authentication, authorization, and documentation.",
-    color: "text-yellow-400",
-  },
-  {
-    icon: "🗄️",
-    title: "Redis Caching",
-    description:
-      "Implemented Redis caching strategies that reduced API response times by 40–50% across multiple production systems.",
-    color: "text-red-400",
-  },
-  {
-    icon: "🐳",
-    title: "Docker + AWS",
-    description:
-      "Production deployments with Docker containers on AWS EC2/ECR, S3, and Route 53 with zero-downtime deploys.",
-    color: "text-blue-400",
-  },
-  {
-    icon: "🔄",
-    title: "CI/CD Pipelines",
-    description:
-      "Built automated CI/CD pipelines with GitLab, cutting release cycles from hours to minutes.",
-    color: "text-green-400",
-  },
-  {
-    icon: "🤖",
-    title: "AI Integration",
-    description:
-      "Integrated AI agents for personalized travel recommendations and automated booking processing.",
-    color: "text-purple-400",
-  },
-  {
-    icon: "📡",
-    title: "Real-time Systems",
-    description:
-      "Built real-time communication with Socket.IO and Firebase FCM for notifications and live tracking.",
-    color: "text-cyan-400",
-  },
-];
-
-const education = [
-  {
-    degree: "Bachelor of Science – Computer Science",
-    institution: "University of Greenwich Da Nang",
-    period: "2018 – 2023",
-    note: "Third-Class Bachelor of Science (22/02/2023). Focus: SDLC, Agile/Scrum, software development, and AI.",
-  },
-  {
-    degree: "Higher National Diploma – BTEC Computing",
-    institution: "FPT Greenwich",
-    period: "08/2021",
-    note: "Completed an approved HND programme at FPT Greenwich.",
-  },
-];
 
 export default function About() {
   const { data: expData = [], isLoading: expLoading } = useExperiences();
   const { data: skillsData, isLoading: skillsLoading } = useSkills();
+  const { data: highlightsData = [], isLoading: highlightsLoading } =
+    useHighlights();
+  const { data: educationData = [], isLoading: educationLoading } =
+    useEducation();
 
-  const experiences = Array.isArray(expData) ? expData : [];
-  const skills = skillsData || {
-    languages: [],
-    backend: [],
-    frontend: [],
-    databases: [],
-    devops: [],
-    tools: [],
-  };
+  const experiences = getExperiencesData(expData);
+  const skills = getSkillsData(skillsData);
+  const highlights = getHighlightsData(highlightsData, DEFAULT_HIGHLIGHTS);
+  const education = getEducationData(educationData, DEFAULT_EDUCATION);
 
-  if (expLoading || skillsLoading || !skillsData) {
+  const isLoading = isAboutPageLoading({
+    experiences: expLoading,
+    skills: skillsLoading,
+    highlights: highlightsLoading,
+    education: educationLoading,
+    skillsData,
+  });
+
+  if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center text-white">
         Loading...
@@ -86,35 +51,22 @@ export default function About() {
   return (
     <>
       <SEO
-        title="About · Fullstack Developer Node.js NestJS Vietnam"
-        description="The Quy Nguyen is a Fullstack Developer with 3.5+ years experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, TypeScript, and React. Based in Da Nang, Vietnam."
-        keywords="about The Quy Nguyen, NestJS developer Vietnam, Node.js fullstack engineer Da Nang, fullstack developer Vietnam biography, TypeScript backend developer, Redis caching expert, Docker AWS NestJS developer"
-        path="/about"
+        title={ABOUT_SEO.title}
+        description={ABOUT_SEO.description}
+        keywords={ABOUT_SEO.keywords}
+        path={ABOUT_SEO.path}
       />
 
       <div className="pt-16">
-        {/* Header */}
-        <header className="relative py-20 px-4 sm:px-6 overflow-hidden mb-6">
-          <div
-            className="absolute inset-0 hero-glow pointer-events-none"
-            aria-hidden="true"
-          />
-          <div className="max-w-6xl mx-auto">
-            <span className="tag-accent mb-4 inline-block">About Me</span>
-            <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 max-w-3xl">
+        <PageHeader
+          tag="About Me"
+          title={
+            <>
               About <span className="gradient-text">The Quy Nguyen</span>
-            </h1>
-            <p className="text-slate-400 text-lg max-w-3xl leading-relaxed">
-              Fullstack Developer with{" "}
-              <strong className="text-white">3.5+ years of experience</strong>{" "}
-              in building booking systems, AI platforms, and scalable backend
-              services using{" "}
-              <strong className="text-primary-400">Node.js</strong>,{" "}
-              <strong className="text-primary-400">NestJS</strong>, and{" "}
-              <strong className="text-primary-400">React</strong>.
-            </p>
-          </div>
-        </header>
+            </>
+          }
+          subtitle="Fullstack Developer with 3.5+ years of experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, and React."
+        />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
           {/* Bio Section */}
@@ -159,24 +111,18 @@ export default function About() {
                 </p>
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                <div className="glass rounded-xl px-4 py-2">
-                  <div className="text-slate-500 text-xs">Location</div>
-                  <div className="text-white text-sm font-medium">
-                    🇻🇳 Da Nang, Vietnam
+                {PROFILE_INFO.map((info) => (
+                  <div key={info.label} className="glass rounded-xl px-4 py-2">
+                    <div className="text-slate-500 text-xs">{info.label}</div>
+                    <div
+                      className={`text-sm font-medium ${
+                        info.isStatus ? "text-accent-400" : "text-white"
+                      }`}
+                    >
+                      {info.value}
+                    </div>
                   </div>
-                </div>
-                <div className="glass rounded-xl px-4 py-2">
-                  <div className="text-slate-500 text-xs">Experience</div>
-                  <div className="text-white text-sm font-medium">
-                    3.5+ Years
-                  </div>
-                </div>
-                <div className="glass rounded-xl px-4 py-2">
-                  <div className="text-slate-500 text-xs">Status</div>
-                  <div className="text-accent-400 text-sm font-medium">
-                    Open to Work
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -245,7 +191,7 @@ export default function About() {
                       </div>
                       <div className="flex items-center gap-2">
                         <span className="text-slate-500 text-xs">
-                          {exp.period}
+                          {formatDateRange(exp.startDate, exp.endDate)}
                         </span>
                         {exp.current && (
                           <span className="tag-accent text-xs py-0.5">
@@ -276,50 +222,7 @@ export default function About() {
               Technical Skills
             </h2>
             <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[
-                {
-                  label: "Languages",
-                  items: skills.languages,
-                  icon: "💻",
-                  color: "from-blue-500/20 to-blue-600/10",
-                  border: "border-blue-500/20",
-                },
-                {
-                  label: "Backend Frameworks",
-                  items: skills.backend,
-                  icon: "⚙️",
-                  color: "from-purple-500/20 to-purple-600/10",
-                  border: "border-purple-500/20",
-                },
-                {
-                  label: "Frontend",
-                  items: skills.frontend,
-                  icon: "🎨",
-                  color: "from-pink-500/20 to-pink-600/10",
-                  border: "border-pink-500/20",
-                },
-                {
-                  label: "Databases",
-                  items: skills.databases,
-                  icon: "🗄️",
-                  color: "from-yellow-500/20 to-yellow-600/10",
-                  border: "border-yellow-500/20",
-                },
-                {
-                  label: "DevOps & Cloud",
-                  items: skills.devops,
-                  icon: "☁️",
-                  color: "from-cyan-500/20 to-cyan-600/10",
-                  border: "border-cyan-500/20",
-                },
-                {
-                  label: "Tools & Methods",
-                  items: skills.tools,
-                  icon: "🔧",
-                  color: "from-green-500/20 to-green-600/10",
-                  border: "border-green-500/20",
-                },
-              ].map(({ label, items, icon, color, border }) => (
+              {SKILL_CATEGORIES.map(({ label, icon, color, border }) => (
                 <article
                   key={label}
                   className={`bg-gradient-to-br ${color} border ${border} rounded-2xl p-5 hover:scale-[1.02] transition-transform duration-300`}
@@ -331,7 +234,7 @@ export default function About() {
                     {label}
                   </h3>
                   <ul className="flex flex-wrap gap-1.5" role="list">
-                    {items?.map((item: string) => (
+                    {getSkillsByCategory(skills, label).map((item: string) => (
                       <li key={item}>
                         <span className="tag text-xs">{item}</span>
                       </li>

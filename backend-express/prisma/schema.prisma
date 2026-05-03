@@ -42,21 +42,47 @@ model Project {
 }
 
 model Experience {
-  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  id          String    @id @default(auto()) @map("_id") @db.ObjectId
   company     String
   role        String
-  period      String
-  current     Boolean  @default(false)
+  startDate   DateTime?
+  endDate     DateTime?
+  current     Boolean   @default(false)
   description String
   tech        String[]
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @updatedAt
 }
 
 model Skill {
-  id        String   @id @default(auto()) @map("_id") @db.ObjectId
-  category  String  @unique
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  category  String    @unique
   items     String[]
+  createdAt DateTime? @default(now())
+  updatedAt DateTime? @updatedAt
 }
 
+model Highlight {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  icon        String
+  title       String   @unique
+  description String
+  color       String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Education {
+  id          String   @id @default(auto()) @map("_id") @db.ObjectId
+  degree      String
+  institution String
+  period      String
+  note        String
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
 
 model User {
   id       String  @id @default(auto()) @map("_id") @db.ObjectId

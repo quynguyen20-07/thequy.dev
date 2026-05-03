@@ -61,7 +61,19 @@ async function runMigration() {
         data: {
           company: exp.company,
           role: exp.role,
-          period: exp.period,
+          startDate: exp.startDate,
+          endDate: exp.endDate,
+          current: exp.current,
+          description: exp.description,
+          tech: exp.tech,
+        },
+      });
+    } else {
+      await prisma.experience.update({
+        where: { id: existing.id },
+        data: {
+          startDate: exp.startDate,
+          endDate: exp.endDate,
           current: exp.current,
           description: exp.description,
           tech: exp.tech,

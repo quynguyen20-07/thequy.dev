@@ -12,7 +12,8 @@ export interface Skills {
 export interface Experience {
   company: string;
   role: string;
-  period: string;
+  startDate: Date | string;
+  endDate: Date | string | null;
   current: boolean;
   description: string;
   tech: string[];
@@ -241,10 +242,21 @@ export const skills: Skills = {
 
 export const experiences: Experience[] = [
   {
+    company: "Unitech Dach",
+    role: "Full Stack Developer",
+    startDate: new Date("2026-01-01"),
+    endDate: null,
+    current: true,
+    description:
+      "Designing and optimizing scalable backend services for booking workflows using NestJS, while building modern web applications with Next.js. Developing AI-integrated platforms and content discovery systems with a focus on performance, scalability, and user experience.",
+    tech: ["NestJS", "NextJS", "PostgreSQL", "Looker", "Orkes", "TailwindCSS"],
+  },
+  {
     company: "ALLY AI JSC",
     role: "Full Stack Developer",
-    period: "3/2025 – Present",
-    current: true,
+    startDate: new Date("2025-03-01"),
+    endDate: new Date("2025-12-31"),
+    current: false,
     description:
       "Designing and optimizing backend services for booking workflows using NestJS and Go. Building AI-integrated platforms and content discovery systems.",
     tech: ["NestJS", "Go", "PostgreSQL", "Redis", "AWS", "Docker"],
@@ -252,7 +264,8 @@ export const experiences: Experience[] = [
   {
     company: "CODING MONSTERS",
     role: "Full Stack Developer",
-    period: "6/2024 – 10/2025",
+    startDate: new Date("2024-06-01"),
+    endDate: new Date("2025-10-31"),
     current: false,
     description:
       "Built scalable web and mobile applications. Managed production deployment pipelines and AWS infrastructure.",
@@ -261,7 +274,8 @@ export const experiences: Experience[] = [
   {
     company: "ST UNITED – DA NANG",
     role: "Full Stack Developer",
-    period: "11/2022 – 05/2024",
+    startDate: new Date("2022-11-01"),
+    endDate: new Date("2024-05-31"),
     current: false,
     description:
       "Designed backend APIs and frontend interfaces. Integrated third-party services and improved system scalability to support rapid user growth.",
