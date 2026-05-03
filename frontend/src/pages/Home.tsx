@@ -4,23 +4,104 @@ import HeroProfileCard from "@app/components/HeroProfileCard";
 import { useProjects } from "@app/api/hooks/useProjects";
 import { useSkills } from "@app/api/hooks/useCommon";
 import SkillsCard from "@app/components/SkillsCard";
-import TechCloud from "@app/components/TechCloud";
-import TechBadge from "@app/components/TechBadge";
 import { Link } from "react-router-dom";
 import SEO from "@app/components/SEO";
 
+
 const stats = [
-  { value: "3.5+", label: "Years Experience" },
-  { value: "5+", label: "Real Projects" },
-  { value: "10+", label: "Technologies" },
-  { value: "3", label: "Companies" },
+  {
+    value: "3.5+",
+    label: "Years Experience",
+    iconBg: "bg-blue-500/20",
+    icon: (
+      <svg
+        className="w-4 h-4 text-blue-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: "5+",
+    label: "Real Projects",
+    iconBg: "bg-blue-500/20",
+    icon: (
+      <svg
+        className="w-4 h-4 text-blue-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: "10+",
+    label: "Technologies",
+    iconBg: "bg-teal-500/20",
+    icon: (
+      <svg
+        className="w-4 h-4 text-teal-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"
+        />
+      </svg>
+    ),
+  },
+  {
+    value: "3",
+    label: "Companies",
+    iconBg: "bg-orange-500/20",
+    icon: (
+      <svg
+        className="w-4 h-4 text-orange-400"
+        fill="none"
+        stroke="currentColor"
+        viewBox="0 0 24 24"
+      >
+        <path
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          strokeWidth={2}
+          d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+        />
+      </svg>
+    ),
+  },
 ];
 
 export default function Home() {
   const { data: projects = [], isLoading: projectsLoading } = useProjects();
   const { data: skills, isLoading: skillsLoading } = useSkills();
 
+
   if (projectsLoading || skillsLoading || !skills) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-white">
+        Loading...
+      </div>
+    );
     return (
       <div className="min-h-screen flex items-center justify-center text-white">
         Loading...
@@ -44,8 +125,31 @@ export default function Home() {
       {/* ── Hero ── */}
       <section
         className="relative min-h-screen flex items-center pt-16"
+        className="relative min-h-screen flex items-center pt-16"
         aria-label="Hero section"
       >
+        {/* Background decorations: isolated overflow-hidden so they don't clip badges */}
+        <div
+          className="absolute inset-0 overflow-hidden pointer-events-none"
+          aria-hidden="true"
+        >
+          <div className="absolute inset-0 hero-glow" />
+          <div className="absolute top-1/4 -left-32 w-96 h-96 bg-primary-600/10 rounded-full blur-3xl animate-pulse-slow" />
+          <div className="absolute bottom-1/4 -right-32 w-80 h-80 bg-accent-500/8 rounded-full blur-3xl animate-pulse-slow" />
+          {/* Floating orbs */}
+          <div
+            className="absolute top-32 right-12 w-4 h-4 rounded-full bg-primary-400/40 animate-float"
+            style={{ animationDelay: "0s" }}
+          />
+          <div
+            className="absolute top-64 right-32 w-2 h-2 rounded-full bg-accent-400/60 animate-float"
+            style={{ animationDelay: "1s" }}
+          />
+          <div
+            className="absolute bottom-40 left-20 w-3 h-3 rounded-full bg-primary-300/30 animate-float"
+            style={{ animationDelay: "2s" }}
+          />
+        </div>
         {/* Background decorations: isolated overflow-hidden so they don't clip badges */}
         <div
           className="absolute inset-0 overflow-hidden pointer-events-none"
@@ -81,10 +185,18 @@ export default function Home() {
               <span className="text-accent-400 text-sm font-medium">
                 Open to opportunities
               </span>
+              <span
+                className="w-2 h-2 rounded-full bg-accent-400 animate-pulse"
+                aria-hidden="true"
+              />
+              <span className="text-accent-400 text-sm font-medium">
+                Open to opportunities
+              </span>
             </div>
 
             {/* H1 – only one per page */}
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-white leading-tight mb-6">
+              Fullstack{" "}
               Fullstack{" "}
               <span className="gradient-text text-glow">Developer</span>
               <br />
@@ -99,11 +211,29 @@ export default function Home() {
               AI-powered platforms, and high-performance backend services using{" "}
               <strong className="text-primary-400">Node.js</strong> and modern
               technologies.
+              I build{" "}
+              <strong className="text-white">scalable booking systems</strong>,
+              AI-powered platforms, and high-performance backend services using{" "}
+              <strong className="text-primary-400">Node.js</strong> and modern
+              technologies.
             </p>
 
             {/* CTA Buttons */}
             <div className="flex flex-wrap gap-4 mb-10">
               <Link to="/projects" className="btn-primary">
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 11H5m14 0l-4-4m4 4l-4 4"
+                  />
                 <svg
                   className="w-4 h-4"
                   fill="none"
@@ -134,6 +264,19 @@ export default function Home() {
                     strokeWidth={2}
                     d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                   />
+                <svg
+                  className="w-4 h-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
+                  />
                 </svg>
                 Get In Touch
               </Link>
@@ -144,6 +287,9 @@ export default function Home() {
               <span className="text-slate-600 text-xs uppercase tracking-widest">
                 Find me on
               </span>
+              <span className="text-slate-600 text-xs uppercase tracking-widest">
+                Find me on
+              </span>
               <a
                 href="https://github.com/quynguyen20-07"
                 target="_blank"
@@ -151,6 +297,12 @@ export default function Home() {
                 aria-label="GitHub Profile"
                 className="text-slate-400 hover:text-white transition-colors"
               >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
                 <svg
                   className="w-5 h-5"
                   fill="currentColor"
@@ -173,6 +325,12 @@ export default function Home() {
                   viewBox="0 0 24 24"
                   aria-hidden="true"
                 >
+                <svg
+                  className="w-5 h-5"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
                   <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z" />
                 </svg>
               </a>
@@ -180,20 +338,25 @@ export default function Home() {
           </div>
 
           {/* Right: Visual card */}
-          <HeroProfileCard stats={stats}>
-            <TechCloud>
-              {/* Main profile card is rendered by HeroProfileCard */}
-              {/* Tech badges arranged by position */}
-              {HERO_TECH_BADGES.map((badge) => (
-                <TechBadge key={badge.label} {...badge} variant="floating" />
-              ))}
-            </TechCloud>
-          </HeroProfileCard>
+          <HeroProfileCard stats={stats} badges={HERO_TECH_BADGES} />
         </div>
 
         {/* Scroll indicator */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
           <span className="text-slate-600 text-xs">Scroll down</span>
+          <svg
+            className="w-4 h-4 text-slate-600"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M19 9l-7 7-7-7"
+            />
           <svg
             className="w-4 h-4 text-slate-600"
             fill="none"
@@ -216,10 +379,16 @@ export default function Home() {
         className="max-w-6xl mx-auto px-4 sm:px-6 py-20"
         aria-label="Featured projects"
       >
+      <section
+        className="max-w-6xl mx-auto px-4 sm:px-6 py-20"
+        aria-label="Featured projects"
+      >
         <header className="mb-12">
           <span className="tag-accent mb-3">Portfolio</span>
           <h2 className="section-title mt-3">Featured Projects</h2>
           <p className="section-subtitle">
+            Real-world systems built with Node.js, NestJS, React, and modern
+            cloud infrastructure.
             Real-world systems built with Node.js, NestJS, React, and modern
             cloud infrastructure.
           </p>
@@ -235,7 +404,16 @@ export default function Home() {
                 className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${project.color} opacity-60 group-hover:opacity-100 transition-opacity`}
                 aria-hidden="true"
               />
+              <div
+                className={`absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r ${project.color} opacity-60 group-hover:opacity-100 transition-opacity`}
+                aria-hidden="true"
+              />
               <div className="flex items-center gap-3 mb-4">
+                <span
+                  className="text-2xl w-10 h-10 rounded-xl glass flex items-center justify-center"
+                  role="img"
+                  aria-label={project.category}
+                >
                 <span
                   className="text-2xl w-10 h-10 rounded-xl glass flex items-center justify-center"
                   role="img"
@@ -250,8 +428,17 @@ export default function Home() {
                   <h3 className="text-white font-bold text-sm">
                     {project.title}
                   </h3>
+                  <p className="text-xs text-accent-400 font-medium">
+                    {project.category}
+                  </p>
+                  <h3 className="text-white font-bold text-sm">
+                    {project.title}
+                  </h3>
                 </div>
               </div>
+              <p className="text-slate-400 text-sm leading-relaxed mb-4">
+                {project.shortDescription}
+              </p>
               <p className="text-slate-400 text-sm leading-relaxed mb-4">
                 {project.shortDescription}
               </p>
@@ -260,8 +447,14 @@ export default function Home() {
                   <span key={t} className="tag text-xs">
                     {t}
                   </span>
+                  <span key={t} className="tag text-xs">
+                    {t}
+                  </span>
                 ))}
                 {project?.tech?.length > 4 && (
+                  <span className="tag text-xs">
+                    +{project?.tech?.length - 4}
+                  </span>
                   <span className="tag text-xs">
                     +{project?.tech?.length - 4}
                   </span>
@@ -287,6 +480,19 @@ export default function Home() {
                 strokeWidth={2}
                 d="M19 9l-7 7-7-7"
               />
+            <svg
+              className="w-4 h-4"
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M19 9l-7 7-7-7"
+              />
             </svg>
           </Link>
         </div>
@@ -297,18 +503,49 @@ export default function Home() {
         className="max-w-6xl mx-auto px-4 sm:px-6 py-20 border-t border-white/5"
         aria-label="Technical skills"
       >
+      <section
+        className="max-w-6xl mx-auto px-4 sm:px-6 py-20 border-t border-white/5"
+        aria-label="Technical skills"
+      >
         <header className="mb-12 text-center">
           <span className="tag mb-3">Tech Stack</span>
+          <h2 className="section-title mt-3 mx-auto text-center">
+            Skills & Technologies
+          </h2>
           <h2 className="section-title mt-3 mx-auto text-center">
             Skills & Technologies
           </h2>
           <p className="section-subtitle mx-auto text-center">
             Proficient across the full development lifecycle — from backend APIs
             to cloud deployment.
+            Proficient across the full development lifecycle — from backend APIs
+            to cloud deployment.
           </p>
         </header>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {SKILL_CATEGORIES.map(({ label, icon, color }) => {
+            // Get the skill items from the API data
+            const skillItems =
+              {
+                Languages: skills?.languages,
+                Backend: skills?.backend,
+                Frontend: skills?.frontend,
+                Databases: skills?.databases,
+                "DevOps & Cloud": skills?.devops,
+                "Tools & Methods": skills?.tools,
+              }[label] || [];
+
+            return (
+              <SkillsCard
+                key={label}
+                icon={icon}
+                label={label}
+                color={color}
+                items={skillItems}
+              />
+            );
+          })}
           {SKILL_CATEGORIES.map(({ label, icon, color }) => {
             // Get the skill items from the API data
             const skillItems =
@@ -339,16 +576,27 @@ export default function Home() {
         className="max-w-6xl mx-auto px-4 sm:px-6 py-20"
         aria-label="Call to action"
       >
+      <section
+        className="max-w-6xl mx-auto px-4 sm:px-6 py-20"
+        aria-label="Call to action"
+      >
         <div className="relative glass rounded-3xl p-10 md:p-16 text-center overflow-hidden border-glow">
+          <div
+            className="absolute inset-0 bg-gradient-to-br from-primary-600/10 via-transparent to-accent-500/5 pointer-events-none"
+            aria-hidden="true"
+          />
           <div
             className="absolute inset-0 bg-gradient-to-br from-primary-600/10 via-transparent to-accent-500/5 pointer-events-none"
             aria-hidden="true"
           />
           <h2 className="text-3xl md:text-4xl font-black text-white mb-4 relative z-10">
             Let's Build Something{" "}
+            Let's Build Something{" "}
             <span className="gradient-text">Amazing Together</span>
           </h2>
           <p className="text-slate-400 text-lg mb-8 max-w-xl mx-auto relative z-10">
+            Looking for a Node.js backend developer or fullstack engineer in
+            Vietnam? I'm available for new projects.
             Looking for a Node.js backend developer or fullstack engineer in
             Vietnam? I'm available for new projects.
           </p>
@@ -363,5 +611,6 @@ export default function Home() {
         </div>
       </section>
     </>
+  );
   );
 }
