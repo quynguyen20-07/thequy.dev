@@ -16,6 +16,7 @@ import {
 } from "@app/commons/constant/about";
 import { useHighlights, useEducation } from "@app/api/hooks/useAdminCommon";
 import { useExperiences, useSkills } from "@app/api/hooks/useCommon";
+import PageHeader from "@app/components/PageHeader";
 import SEO from "@app/components/SEO";
 
 export default function About() {
@@ -57,28 +58,15 @@ export default function About() {
       />
 
       <div className="pt-16">
-        {/* Header */}
-        <header className="relative py-20 px-4 sm:px-6 overflow-hidden mb-6">
-          <div
-            className="absolute inset-0 hero-glow pointer-events-none"
-            aria-hidden="true"
-          />
-          <div className="max-w-6xl mx-auto">
-            <span className="tag-accent mb-4 inline-block">About Me</span>
-            <h1 className="text-4xl sm:text-5xl font-black text-white mb-6 max-w-3xl">
+        <PageHeader
+          tag="About Me"
+          title={
+            <>
               About <span className="gradient-text">The Quy Nguyen</span>
-            </h1>
-            <p className="text-slate-400 text-lg max-w-3xl leading-relaxed">
-              Fullstack Developer with{" "}
-              <strong className="text-white">3.5+ years of experience</strong>{" "}
-              in building booking systems, AI platforms, and scalable backend
-              services using{" "}
-              <strong className="text-primary-400">Node.js</strong>,{" "}
-              <strong className="text-primary-400">NestJS</strong>, and{" "}
-              <strong className="text-primary-400">React</strong>.
-            </p>
-          </div>
-        </header>
+            </>
+          }
+          subtitle="Fullstack Developer with 3.5+ years of experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, and React."
+        />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20 space-y-20">
           {/* Bio Section */}

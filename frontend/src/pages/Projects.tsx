@@ -1,6 +1,7 @@
 import { useProjects } from "@app/api/hooks/useProjects";
 import type { Project } from "@app/api/types/project";
 import ProjectCard from "@app/components/ProjectCard";
+import PageHeader from "@app/components/PageHeader";
 import SEO from "@app/components/SEO";
 import { useState } from "react";
 
@@ -37,24 +38,17 @@ export default function Projects() {
       />
 
       <div className="pt-16">
-        {/* Page Header */}
-        <header className="relative py-20 px-4 sm:px-6 overflow-hidden mb-6">
-          <div
-            className="absolute inset-0 hero-glow pointer-events-none"
-            aria-hidden="true"
-          />
-          <div className="max-w-6xl mx-auto text-center">
-            <span className="tag-accent mb-4 inline-block">Portfolio</span>
-            <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
+        <PageHeader
+          tag="Portfolio"
+          title={
+            <>
               Projects & <span className="gradient-text">Work Experience</span>
-            </h1>
-            <p className="text-slate-400 text-lg max-w-2xl mx-auto">
-              Real-world systems built across AI platforms, booking engines,
-              LMS, and government-grade applications using NestJS, React, and
-              modern cloud infrastructure.
-            </p>
-          </div>
-        </header>
+            </>
+          }
+          subtitle="Real-world systems built across AI platforms, booking engines, LMS, and government-grade applications using NestJS, React, and modern cloud infrastructure."
+          centered={true}
+        />
+
         {/* Filter Tabs */}
         <section
           className="max-w-6xl mx-auto px-4 sm:px-6 mb-10"

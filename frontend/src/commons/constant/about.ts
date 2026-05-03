@@ -188,3 +188,14 @@ export const SECTION_TITLES = {
   Biography: "Biography",
   TimelineLabel: "Timeline",
 };
+
+export const BADGES = [
+  { label: "TypeScript", color: "text-green-400", icon: "💻" },
+  { label: "NestJS", color: "text-yellow-400", icon: "⚡" },
+  { label: "Express", color: "text-orange-400", icon: "🚀" },
+  { label: "React", color: "text-cyan-400", icon: "⚛️" },
+  { label: "Next.js", color: "text-indigo-400", icon: "▲" },
+  { label: "PostgreSQL", color: "text-blue-400", icon: "🐘" },
+  { label: "MongoDB", color: "text-green-500", icon: "🍃" },
+  { label: "AWS", color: "text-sky-400", icon: "☁️" },
+];

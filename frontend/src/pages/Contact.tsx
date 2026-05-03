@@ -1,3 +1,4 @@
+import PageHeader from "@app/components/PageHeader";
 import SEO from "@app/components/SEO";
 // src/pages/Contact.jsx
 import { useState } from "react";
@@ -129,25 +130,16 @@ export default function Contact() {
       />
 
       <div className="pt-16">
-        {/* Header */}
-        <header className="relative py-20 px-4 sm:px-6 overflow-hidden mb-6">
-          <div
-            className="absolute inset-0 hero-glow pointer-events-none"
-            aria-hidden="true"
-          />
-          <div className="max-w-4xl mx-auto text-center">
-            <span className="tag-accent mb-4 inline-block">
-              Let's Work Together
-            </span>
-            <h1 className="text-4xl sm:text-5xl font-black text-white mb-4">
+        <PageHeader
+          tag="Let's Work Together"
+          title={
+            <>
               Get In <span className="gradient-text">Touch</span>
-            </h1>
-            <p className="text-slate-400 text-lg max-w-xl mx-auto">
-              Have a project in mind or want to discuss opportunities? I'm
-              always open to new conversations.
-            </p>
-          </div>
-        </header>
+            </>
+          }
+          subtitle="Have a project in mind or want to discuss opportunities? I'm always open to new conversations."
+          centered={true}
+        />
 
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pb-20">
           <div className="grid lg:grid-cols-2 gap-12">
