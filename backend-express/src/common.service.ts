@@ -2,9 +2,13 @@ import { PrismaClient, Skill } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
+// ============================================================================
+// PUBLIC QUERIES (For Frontend)
+// ============================================================================
+
 export class CommonService {
   async getExperiences() {
-    return prisma.experience.findMany({ orderBy: { period: "desc" } });
+    return prisma.experience.findMany({ orderBy: { startDate: "desc" } });
   }
 
   async getSkills() {
@@ -19,7 +23,18 @@ export class CommonService {
     return prisma.profile.findFirst();
   }
 
-  // Admin CRUD - Experience
+  async getHighlights() {
+    return prisma.highlight.findMany({ orderBy: { order: "asc" } });
+  }
+
+  async getEducation() {
+    return prisma.education.findMany({ orderBy: { order: "asc" } });
+  }
+
+  // ============================================================================
+  // ADMIN CRUD - Experience
+  // ============================================================================
+
   async createExperience(data: {
     company: string;
     role: string;
@@ -30,6 +45,7 @@ export class CommonService {
   }) {
     return prisma.experience.create({ data });
   }
+
   async updateExperience(
     id: string,
     data: {
@@ -43,22 +59,113 @@ export class CommonService {
   ) {
     return prisma.experience.update({ where: { id }, data });
   }
+
   async deleteExperience(id: string) {
     return prisma.experience.delete({ where: { id } });
   }
 
-  // Admin CRUD - Skills
+  // ============================================================================
+  // ADMIN CRUD - Skills
+  // ============================================================================
+
   async createSkill(data: { category: string; items: string[] }) {
     return prisma.skill.create({ data });
   }
+
   async updateSkill(id: string, data: { category?: string; items?: string[] }) {
     return prisma.skill.update({ where: { id }, data });
   }
+
   async deleteSkill(id: string) {
     return prisma.skill.delete({ where: { id } });
   }
 
-  // Admin CRUD - Profile
+  // ============================================================================
+  // ADMIN CRUD - Highlight
+  // ============================================================================
+
+  async createHighlight(data: {
+    icon: string;
+    title: string;
+    description: string;
+    color: string;
+    order?: number;
+  }) {
+    return prisma.highlight.create({ data });
+  }
+
+  async updateHighlight(
+    id: string,
+    data: {
+      icon?: string;
+      title?: string;
+      description?: string;
+      color?: string;
+      order?: number;
+    },
+  ) {
+    return prisma.highlight.update({ where: { id }, data });
+  }
+
+  async deleteHighlight(id: string) {
+    return prisma.highlight.delete({ where: { id } });
+  }
+
+  async reorderHighlights(items: Array<{ id: string; order: number }>) {
+    const updates = items.map((item) =>
+      prisma.highlight.update({
+        where: { id: item.id },
+        data: { order: item.order },
+      }),
+    );
+    return prisma.$transaction(updates);
+  }
+
+  // ============================================================================
+  // ADMIN CRUD - Education
+  // ============================================================================
+
+  async createEducation(data: {
+    degree: string;
+    institution: string;
+    period: string;
+    note: string;
+    order?: number;
+  }) {
+    return prisma.education.create({ data });
+  }
+
+  async updateEducation(
+    id: string,
+    data: {
+      degree?: string;
+      institution?: string;
+      period?: string;
+      note?: string;
+      order?: number;
+    },
+  ) {
+    return prisma.education.update({ where: { id }, data });
+  }
+
+  async deleteEducation(id: string) {
+    return prisma.education.delete({ where: { id } });
+  }
+
+  async reorderEducation(items: Array<{ id: string; order: number }>) {
+    const updates = items.map((item) =>
+      prisma.education.update({
+        where: { id: item.id },
+        data: { order: item.order },
+      }),
+    );
+    return prisma.$transaction(updates);
+  }
+
+  // ============================================================================
+  // ADMIN CRUD - Profile
+  // ============================================================================
+
   async updateProfile(
     id: string,
     data: {

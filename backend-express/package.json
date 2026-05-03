@@ -10,6 +10,7 @@
     "start": "node dist/index.js",
     "migrate": "tsx src/scripts/migrate.ts",
     "seed-admin": "tsx src/scripts/seed-admin.ts",
+    "seed-about": "tsx src/scripts/seed-about.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
