@@ -12,5 +12,8 @@
     "build": "yarn workspace frontend build && yarn workspace backend-express build",
     "start": "yarn build && yarn workspace backend-express start",
     "migrate": "yarn workspace backend-express migrate"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.3"
   }
 }
