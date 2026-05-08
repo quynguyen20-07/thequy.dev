@@ -19,6 +19,10 @@ const ExperienceAdmin = lazy(() => import("./admin/ExperienceAdmin"));
 const HighlightAdmin = lazy(() => import("./admin/HighlightAdmin"));
 const EducationAdmin = lazy(() => import("./admin/EducationAdmin"));
 const ProfileAdmin = lazy(() => import("./admin/ProfileAdmin"));
+const HomeAdmin = lazy(() => import("./admin/HomeAdmin"));
+const ContactAdmin = lazy(() => import("./admin/ContactAdmin"));
+const SeoAdmin = lazy(() => import("./admin/SeoAdmin"));
+const SkillsAdmin = lazy(() => import("./admin/SkillsAdmin"));
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -156,6 +160,46 @@ export default function App() {
               <ProtectedRoute>
                 <Suspense fallback={<PageLoader />}>
                   <ProfileAdmin />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/home"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <HomeAdmin />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/contact"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <ContactAdmin />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/seo"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <SeoAdmin />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/skills"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <SkillsAdmin />
                 </Suspense>
               </ProtectedRoute>
             }

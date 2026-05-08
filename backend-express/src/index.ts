@@ -1,11 +1,18 @@
 import "dotenv/config";
 
+import experienceRoutes from "@app/modules/experience/experience.routes";
+import highlightRoutes from "@app/modules/highlight/highlight.routes";
+import educationRoutes from "@app/modules/education/education.routes";
 import { loggerMiddleware } from "@app/middlewares/logger.middleware";
-import { requireAuth, requireRole } from "@app/auth/auth.middleware";
-import { ProjectController } from "@app/project.controller";
-import { AuthController } from "@app/auth/auth.controller";
-import { CommonController } from "@app/common.controller";
+import projectRoutes from "@app/modules/project/project.routes";
+import profileRoutes from "@app/modules/profile/profile.routes";
+import contactRoutes from "@app/modules/contact/contact.routes";
+import skillRoutes from "@app/modules/skill/skill.routes";
+import homeRoutes from "@app/modules/home/home.routes";
+// Module routes
+import authRoutes from "@app/modules/auth/auth.routes";
 import express, { Request, Response } from "express";
+import seoRoutes from "@app/modules/seo/seo.routes";
 import swaggerUi from "swagger-ui-express";
 import { specs } from "@app/swagger";
 import path from "path";
@@ -14,7 +21,7 @@ import cors from "cors";
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Senior Style: Middlewares
+// Middlewares
 app.use(cors());
 app.use(express.json());
 app.use(loggerMiddleware);
@@ -22,149 +29,17 @@ app.use(loggerMiddleware);
 // API Documentation
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
 
-const projectController = new ProjectController();
-const authController = new AuthController();
-const commonController = new CommonController();
-
-// Auth routes
-app.post("/api/auth/login", (req: any, res: any) =>
-  authController.login(req, res),
-);
-
-// Public API routes
-app.get("/api/projects", (req: any, res: any) =>
-  projectController.getProjects(req, res),
-);
-app.get("/api/experiences", (req: any, res: any) =>
-  commonController.getExperiences(req, res),
-);
-app.get("/api/skills", (req: any, res: any) =>
-  commonController.getSkills(req, res),
-);
-app.get("/api/profile", (req: any, res: any) =>
-  commonController.getProfile(req, res),
-);
-app.get("/api/highlights", (req: any, res: any) =>
-  commonController.getHighlights(req, res),
-);
-app.get("/api/education", (req: any, res: any) =>
-  commonController.getEducation(req, res),
-);
-
-// Protected admin API routes
-app.post(
-  "/api/projects",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => projectController.createProject(req, res),
-);
-app.put(
-  "/api/projects/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => projectController.updateProject(req, res),
-);
-app.delete(
-  "/api/projects/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => projectController.deleteProject(req, res),
-);
-
-app.post(
-  "/api/experiences",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.createExperience(req, res),
-);
-app.put(
-  "/api/experiences/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.updateExperience(req, res),
-);
-app.delete(
-  "/api/experiences/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.deleteExperience(req, res),
-);
-
-app.post(
-  "/api/skills",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.createSkill(req, res),
-);
-app.put(
-  "/api/skills/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.updateSkill(req, res),
-);
-app.delete(
-  "/api/skills/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.deleteSkill(req, res),
-);
-
-app.post(
-  "/api/highlights",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.createHighlight(req, res),
-);
-app.put(
-  "/api/highlights/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.updateHighlight(req, res),
-);
-app.delete(
-  "/api/highlights/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.deleteHighlight(req, res),
-);
-app.post(
-  "/api/highlights/reorder",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.reorderHighlights(req, res),
-);
-
-app.post(
-  "/api/education",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.createEducation(req, res),
-);
-app.put(
-  "/api/education/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.updateEducation(req, res),
-);
-app.delete(
-  "/api/education/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.deleteEducation(req, res),
-);
-app.post(
-  "/api/education/reorder",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.reorderEducation(req, res),
-);
-
-app.put(
-  "/api/profile/:id",
-  requireAuth,
-  requireRole("ADMIN"),
-  (req: any, res: any) => commonController.updateProfile(req, res),
-);
+// Module routes
+app.use("/api/auth", authRoutes);
+app.use("/api/projects", projectRoutes);
+app.use("/api/experiences", experienceRoutes);
+app.use("/api/skills", skillRoutes);
+app.use("/api/highlights", highlightRoutes);
+app.use("/api/education", educationRoutes);
+app.use("/api/profile", profileRoutes);
+app.use("/api/home", homeRoutes);
+app.use("/api/contact", contactRoutes);
+app.use("/api/seo", seoRoutes);
 
 // Serve Frontend Static Files
 const frontendDistPath = path.resolve(__dirname, "../../frontend/dist");
@@ -182,7 +57,7 @@ if (process.env.NODE_ENV !== "production") {
   app.listen(port, () => {
     const { logRoutes } = require("./utils/route-logger");
     console.log(
-      `[Express] ${new Date().toLocaleString()}  LOG [RouterExplorer] Nest-style Server running on port ${port}`,
+      `[Express] ${new Date().toLocaleString()}  LOG [RouterExplorer] Server running on port ${port}`,
     );
     logRoutes(app);
     console.log(

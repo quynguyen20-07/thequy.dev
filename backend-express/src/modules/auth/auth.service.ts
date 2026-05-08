@@ -1,14 +1,14 @@
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcryptjs';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient } from "@prisma/client";
+import jwt from "jsonwebtoken";
+import bcrypt from "bcryptjs";
 
 const prisma = new PrismaClient();
-const JWT_SECRET = process.env.JWT_SECRET || 'super-secret-key';
+const JWT_SECRET = process.env.JWT_SECRET || "super-secret-key";
 
 export class AuthService {
   async login(email: string, pass: string) {
     const user = await prisma.user.findUnique({
-      where: { email }
+      where: { email },
     });
 
     if (!user) return null;
@@ -19,10 +19,12 @@ export class AuthService {
     const token = jwt.sign(
       { sub: user.id, email: user.email, role: user.role },
       JWT_SECRET,
-      { expiresIn: '24h' }
+      { expiresIn: "24h" },
     );
 
-    return { access_token: token, user: { email: user.email, role: user.role } };
+    return {
+      access_token: token,
+      user: { email: user.email, role: user.role },
+    };
   }
 }
-

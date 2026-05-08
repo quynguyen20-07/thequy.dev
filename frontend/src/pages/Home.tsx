@@ -1,24 +1,31 @@
 import { SKILL_CATEGORIES } from "@app/commons/constant/skill-categories";
 import { HERO_TECH_BADGES } from "@app/commons/constant/tech-stack";
+import { useSkills, useProfile } from "@app/api/hooks/useCommon";
 import HeroProfileCard from "@app/components/HeroProfileCard";
+import { useHomeStats } from "@app/api/hooks/useHomeStats";
 import { useProjects } from "@app/api/hooks/useProjects";
-import { useSkills } from "@app/api/hooks/useCommon";
 import SkillsCard from "@app/components/SkillsCard";
+import { usePageSeo } from "@app/api/hooks/useSeo";
 import TechCloud from "@app/components/TechCloud";
 import TechBadge from "@app/components/TechBadge";
 import { Link } from "react-router-dom";
 import SEO from "@app/components/SEO";
 
-const stats = [
-  { value: "3.5+", label: "Years Experience" },
-  { value: "5+", label: "Real Projects" },
-  { value: "10+", label: "Technologies" },
-  { value: "3", label: "Companies" },
+const DEFAULT_STATS = [
+  { id: "1", value: "3.5+", label: "Years Experience", order: 0 },
+  { id: "2", value: "5+", label: "Real Projects", order: 1 },
+  { id: "3", value: "10+", label: "Technologies", order: 2 },
+  { id: "4", value: "3", label: "Companies", order: 3 },
 ];
 
 export default function Home() {
   const { data: projects = [], isLoading: projectsLoading } = useProjects();
   const { data: skills, isLoading: skillsLoading } = useSkills();
+  const { data: statsData } = useHomeStats();
+  const { data: profile } = useProfile();
+  const { data: seo } = usePageSeo("home");
+
+  const stats = statsData?.length ? statsData : DEFAULT_STATS;
 
   if (projectsLoading || skillsLoading || !skills) {
     return (
@@ -35,10 +42,19 @@ export default function Home() {
   return (
     <>
       <SEO
-        title="Fullstack Developer | Node.js & NestJS Developer Vietnam"
-        description="The Quy Nguyen – Fullstack Developer with 3.5+ years experience building scalable booking systems, AI-powered platforms, and high-performance backend services using Node.js, NestJS, and React. Available for hire in Vietnam."
-        keywords="Node.js developer Vietnam, NestJS backend developer, React portfolio developer, Fullstack developer Vietnam, The Quy Nguyen, booking platform developer, AI backend developer Da Nang"
-        path="/"
+        title={
+          seo?.title ??
+          "Fullstack Developer | Node.js & NestJS Developer Vietnam"
+        }
+        description={
+          seo?.description ??
+          "The Quy Nguyen – Fullstack Developer with 3.5+ years experience building scalable booking systems, AI-powered platforms, and high-performance backend services using Node.js, NestJS, and React. Available for hire in Vietnam."
+        }
+        keywords={
+          seo?.keywords ??
+          "Node.js developer Vietnam, NestJS backend developer, React portfolio developer, Fullstack developer Vietnam, The Quy Nguyen, booking platform developer, AI backend developer Da Nang"
+        }
+        path={seo?.path ?? "/"}
       />
 
       {/* ── Hero ── */}
@@ -79,7 +95,7 @@ export default function Home() {
                 aria-hidden="true"
               />
               <span className="text-accent-400 text-sm font-medium">
-                Open to opportunities
+                {profile?.statusBadge ?? "Open to opportunities"}
               </span>
             </div>
 

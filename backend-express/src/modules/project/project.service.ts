@@ -1,5 +1,6 @@
-import type { ProjectInput } from "@app/validators/project.validator";
 import { PrismaClient, Project } from "@prisma/client";
+
+import type { ProjectInput } from "./project.validator";
 
 const prisma = new PrismaClient();
 

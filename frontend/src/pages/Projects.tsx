@@ -2,11 +2,13 @@ import { useProjects } from "@app/api/hooks/useProjects";
 import type { Project } from "@app/api/types/project";
 import ProjectCard from "@app/components/ProjectCard";
 import PageHeader from "@app/components/PageHeader";
+import { usePageSeo } from "@app/api/hooks/useSeo";
 import SEO from "@app/components/SEO";
 import { useState } from "react";
 
 export default function Projects() {
   const { data: projectsData = [], isLoading } = useProjects();
+  const { data: seo } = usePageSeo("projects");
   const [activeCategory, setActiveCategory] = useState<string>("All");
 
   if (isLoading) {
@@ -31,10 +33,16 @@ export default function Projects() {
   return (
     <>
       <SEO
-        title="Projects · Node.js & NestJS Developer Vietnam"
-        description="Explore The Quy Nguyen's portfolio projects: TripC AI Platform, RoomsBooked hotel booking system, DevPlus LMS, Driving Test Management System, and DigiEye AI Camera. Built with NestJS, React, PostgreSQL, Redis, and AWS."
-        keywords="TripC AI platform NestJS, RoomsBooked hotel booking system, DevPlus LMS NestJS React, driving test management system, DigiEye AI camera system, Node.js developer Vietnam projects, NestJS backend developer portfolio"
-        path="/projects"
+        title={seo?.title ?? "Projects · Node.js & NestJS Developer Vietnam"}
+        description={
+          seo?.description ??
+          "Explore The Quy Nguyen's portfolio projects: TripC AI Platform, RoomsBooked hotel booking system, DevPlus LMS, Driving Test Management System, and DigiEye AI Camera. Built with NestJS, React, PostgreSQL, Redis, and AWS."
+        }
+        keywords={
+          seo?.keywords ??
+          "TripC AI platform NestJS, RoomsBooked hotel booking system, DevPlus LMS NestJS React, driving test management system, DigiEye AI camera system, Node.js developer Vietnam projects, NestJS backend developer portfolio"
+        }
+        path={seo?.path ?? "/projects"}
       />
 
       <div className="pt-16">

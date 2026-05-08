@@ -8,17 +8,47 @@ generator client {
 }
 
 model Profile {
-  id       String  @id @default(auto()) @map("_id") @db.ObjectId
-  name     String
-  role     String
-  bio      String
-  email    String
-  avatar   String?
-  phone    String?
-  location String?
-  resume   String?
-  github   String?
-  linkedin String?
+  id             String   @id @default(auto()) @map("_id") @db.ObjectId
+  name           String
+  role           String
+  bio            String
+  bioParagraphs  String[]
+  statusBadge    String?
+  email          String
+  avatar         String?
+  phone          String?
+  location       String?
+  resume         String?
+  github         String?
+  linkedin       String?
+}
+
+model HomeStat {
+  id    String @id @default(auto()) @map("_id") @db.ObjectId
+  value String
+  label String @unique
+  order Int    @default(0)
+}
+
+model ContactMethod {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  label       String
+  value       String
+  href        String
+  description String
+  iconType    String // email | github | linkedin | phone | twitter | etc.
+  color       String
+  iconColor   String
+  order       Int    @default(0)
+}
+
+model PageSeo {
+  id          String @id @default(auto()) @map("_id") @db.ObjectId
+  page        String @unique // home | about | contact | projects
+  title       String
+  description String
+  keywords    String
+  path        String
 }
 
 
