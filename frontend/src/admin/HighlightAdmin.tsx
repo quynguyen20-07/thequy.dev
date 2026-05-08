@@ -4,6 +4,8 @@ import {
   useUpdateHighlight,
   useDeleteHighlight,
 } from "@app/api/hooks/useAdminCommon";
+import AdminLayout from "@app/admin/AdminLayout";
+import { toast } from "react-hot-toast";
 import { useState } from "react";
 
 const COLORS = [
@@ -38,15 +40,34 @@ export default function HighlightAdmin() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    const isEditing = !!editingId;
+    const promise = isEditing
+      ? updateMutation.mutateAsync({ id: editingId!, data: form })
+      : createMutation.mutateAsync(form);
 
-    if (editingId) {
-      await updateMutation.mutateAsync({ id: editingId, data: form });
-    } else {
-      await createMutation.mutateAsync(form);
-    }
+    toast.promise(promise, {
+      loading: isEditing ? "Đang cập nhật..." : "Đang thêm mới...",
+      success: isEditing ? "Cập nhật thành công!" : "Thêm mới thành công!",
+      error: (err: any) => {
+        const d = err.response?.data;
+        if (d?.errors?.length)
+          return d.errors.map((e: any) => e.message).join(", ");
+        return (
+          d?.message || (isEditing ? "Cập nhật thất bại" : "Thêm mới thất bại")
+        );
+      },
+    });
 
-    setForm({ icon: "", title: "", description: "", color: "text-yellow-400" });
-    setEditingId(null);
+    try {
+      await promise;
+      setForm({
+        icon: "",
+        title: "",
+        description: "",
+        color: "text-yellow-400",
+      });
+      setEditingId(null);
+    } catch {}
   };
 
   const handleEdit = (highlight: any) => {
@@ -60,9 +81,12 @@ export default function HighlightAdmin() {
   };
 
   const handleDelete = async (id: string) => {
-    if (confirm("Bạn có chắc muốn xóa?")) {
-      await deleteMutation.mutateAsync(id);
-    }
+    if (!window.confirm("Bạn có chắc muốn xóa?")) return;
+    toast.promise(deleteMutation.mutateAsync(id), {
+      loading: "Đang xóa...",
+      success: "Đã xóa!",
+      error: "Xóa thất bại",
+    });
   };
 
   const handleCancel = () => {
@@ -70,10 +94,15 @@ export default function HighlightAdmin() {
     setForm({ icon: "", title: "", description: "", color: "text-yellow-400" });
   };
 
-  if (isLoading) return <div className="text-white">Loading...</div>;
+  if (isLoading)
+    return (
+      <AdminLayout>
+        <div className="text-white">Loading...</div>
+      </AdminLayout>
+    );
 
   return (
-    <div className="space-y-8">
+    <AdminLayout>
       <div>
         <h2 className="text-2xl font-bold text-white mb-6">
           Quản lý Highlights
@@ -207,6 +236,6 @@ export default function HighlightAdmin() {
           ))}
         </div>
       </div>
-    </div>
+    </AdminLayout>
   );
 }

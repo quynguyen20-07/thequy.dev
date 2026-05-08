@@ -22,6 +22,9 @@ export default function AdminLayout({ children }: AdminLayoutProps) {
     { label: "Education", path: "/admin/education", icon: "🎓" },
     { label: "Skills", path: "/admin/skills", icon: "🛠️" },
     { label: "Profile", path: "/admin/profile", icon: "👤" },
+    { label: "Home", path: "/admin/home", icon: "🏠" },
+    { label: "Contact", path: "/admin/contact", icon: "📬" },
+    { label: "SEO", path: "/admin/seo", icon: "🔍" },
   ];
 
   return (

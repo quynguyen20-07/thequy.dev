@@ -1,14 +1,13 @@
-import { Request, Response } from 'express';
-import { ProjectService } from '@app/project.service';
-import { IdParam } from '@app/types/request';
-import { ProjectSchema } from '@app/validators/project.validator';
-import { handleValidationError } from '@app/utils/error-handler';
+import { handleValidationError } from "@app/utils/error-handler";
+import { IdParam } from "@app/types/request";
+import { Request, Response } from "express";
+
+import { ProjectSchema } from "./project.validator";
+import { ProjectService } from "./project.service";
 
 const projectService = new ProjectService();
 
-
 export class ProjectController {
-
   /**
    * @openapi
    * /api/projects:
@@ -25,7 +24,7 @@ export class ProjectController {
       const projects = await projectService.getAllProjects();
       res.json(projects);
     } catch (e) {
-      res.status(500).json({ error: 'Internal server error' });
+      res.status(500).json({ error: "Internal server error" });
     }
   }
 
@@ -38,23 +37,6 @@ export class ProjectController {
    *     summary: Create a new project
    *     security:
    *       - bearerAuth: []
-   *     requestBody:
-   *       required: true
-   *       content:
-   *         application/json:
-   *           schema:
-   *             type: object
-   *             required:
-   *               - slug
-   *               - title
-   *               - company
-   *             properties:
-   *               slug: { type: string }
-   *               title: { type: string }
-   *               company: { type: string }
-   *     responses:
-   *       201:
-   *         description: Project created
    */
   async createProject(req: Request, res: Response) {
     try {
@@ -64,10 +46,7 @@ export class ProjectController {
     } catch (error) {
       return handleValidationError(res, error);
     }
-
-
   }
-
 
   async updateProject(req: Request<IdParam>, res: Response) {
     try {
@@ -75,7 +54,7 @@ export class ProjectController {
       const project = await projectService.updateProject(id, req.body);
       res.json(project);
     } catch (error) {
-      res.status(400).json({ error: 'Update failed' });
+      res.status(400).json({ error: "Update failed" });
     }
   }
 
@@ -85,10 +64,7 @@ export class ProjectController {
       await projectService.deleteProject(id);
       res.status(204).send();
     } catch (error) {
-      res.status(400).json({ error: 'Delete failed' });
+      res.status(400).json({ error: "Delete failed" });
     }
   }
 }
-
-
-

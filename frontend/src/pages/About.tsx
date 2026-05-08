@@ -12,12 +12,22 @@ import {
   DEFAULT_EDUCATION,
   SKILL_CATEGORIES,
   ABOUT_SEO,
-  PROFILE_INFO,
 } from "@app/commons/constant/about";
+import {
+  useExperiences,
+  useSkills,
+  useProfile,
+} from "@app/api/hooks/useCommon";
 import { useHighlights, useEducation } from "@app/api/hooks/useAdminCommon";
-import { useExperiences, useSkills } from "@app/api/hooks/useCommon";
 import PageHeader from "@app/components/PageHeader";
+import { usePageSeo } from "@app/api/hooks/useSeo";
 import SEO from "@app/components/SEO";
+
+const DEFAULT_BIO_PARAGRAPHS = [
+  "I'm a Full-Stack Developer (Node.js) with over 3.5 years of experience building real-world booking and service platforms. My core focus is developing stable, high-performance, and scalable backend systems.",
+  "I specialize in designing RESTful APIs, complex booking workflows, payment-related logic, supplier management systems, and content platforms. I have hands-on experience with Docker, GitLab CI/CD, AWS, and Firebase to deliver reliable production-ready solutions.",
+  "Currently working at Unitech Dach, building digital solutions for enterprise and supply-chain management: tracking container volumes sold, analyzing regional performance, monitoring KPIs, generating automated statistical reports and alerts when targets are missed.",
+];
 
 export default function About() {
   const { data: expData = [], isLoading: expLoading } = useExperiences();
@@ -26,11 +36,24 @@ export default function About() {
     useHighlights();
   const { data: educationData = [], isLoading: educationLoading } =
     useEducation();
+  const { data: profile } = useProfile();
+  const { data: seo } = usePageSeo("about");
 
   const experiences = getExperiencesData(expData);
   const skills = getSkillsData(skillsData);
   const highlights = getHighlightsData(highlightsData, DEFAULT_HIGHLIGHTS);
   const education = getEducationData(educationData, DEFAULT_EDUCATION);
+  const bioParagraphs: string[] = profile?.bioParagraphs?.length
+    ? profile.bioParagraphs
+    : DEFAULT_BIO_PARAGRAPHS;
+  const profileInfo = [
+    { label: "Location", value: profile?.location ?? "🆻🇳 Da Nang, Vietnam" },
+    {
+      label: "Status",
+      value: profile?.statusBadge ?? "Open to Work",
+      isStatus: true,
+    },
+  ];
 
   const isLoading = isAboutPageLoading({
     experiences: expLoading,
@@ -51,10 +74,10 @@ export default function About() {
   return (
     <>
       <SEO
-        title={ABOUT_SEO.title}
-        description={ABOUT_SEO.description}
-        keywords={ABOUT_SEO.keywords}
-        path={ABOUT_SEO.path}
+        title={seo?.title ?? ABOUT_SEO.title}
+        description={seo?.description ?? ABOUT_SEO.description}
+        keywords={seo?.keywords ?? ABOUT_SEO.keywords}
+        path={seo?.path ?? ABOUT_SEO.path}
       />
 
       <div className="pt-16">
@@ -77,41 +100,12 @@ export default function About() {
             <div>
               <h2 className="text-2xl font-bold text-white mb-4">Who I Am</h2>
               <div className="space-y-4 text-slate-400 leading-relaxed">
-                <p>
-                  I'm a{" "}
-                  <strong className="text-white">
-                    Full-Stack Developer (Node.js)
-                  </strong>{" "}
-                  with over 3.5 years of experience building real-world booking
-                  and service platforms. My core focus is developing stable,
-                  high-performance, and scalable backend systems.
-                </p>
-                <p>
-                  I specialize in designing{" "}
-                  <strong className="text-primary-400">RESTful APIs</strong>,
-                  complex booking workflows, payment-related logic, supplier
-                  management systems, and content platforms. I have hands-on
-                  experience with{" "}
-                  <strong className="text-primary-400">
-                    Docker, GitLab CI/CD, AWS
-                  </strong>
-                  , and Firebase to deliver reliable production-ready solutions.
-                </p>
-                <p>
-                  Currently working at{" "}
-                  <strong className="text-accent-400">Unitech Dach</strong>,
-                  building digital solutions for enterprise and supply‑chain
-                  management: tracking container volumes sold, analyzing
-                  regional performance, monitoring KPIs, generating automated
-                  statistical reports and alerts when targets are missed. I
-                  design real‑time data collection pipelines, analytical
-                  dashboards, AI forecasting modules and resource‑allocation
-                  tools, while ensuring security, scalability and seamless
-                  integration with existing business processes.
-                </p>
+                {bioParagraphs.map((para, i) => (
+                  <p key={i}>{para}</p>
+                ))}
               </div>
               <div className="mt-6 flex flex-wrap gap-3">
-                {PROFILE_INFO.map((info) => (
+                {profileInfo.map((info) => (
                   <div key={info.label} className="glass rounded-xl px-4 py-2">
                     <div className="text-slate-500 text-xs">{info.label}</div>
                     <div

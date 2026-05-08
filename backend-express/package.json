@@ -8,9 +8,7 @@
     "dev": "concurrently \"cd ../frontend && yarn build:watch\" \"yarn dev:server\"",
     "build": "prisma generate && tsc",
     "start": "node dist/index.js",
-    "migrate": "tsx src/scripts/migrate.ts",
-    "seed-admin": "tsx src/scripts/seed-admin.ts",
-    "seed-about": "tsx src/scripts/seed-about.ts",
+    "seed": "tsx src/scripts/seed/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
