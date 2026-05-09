@@ -10,6 +10,7 @@ const Home = lazy(() => import("@app/pages/Home"));
 const Projects = lazy(() => import("@app/pages/Projects"));
 const About = lazy(() => import("@app/pages/About"));
 const Contact = lazy(() => import("@app/pages/Contact"));
+const Skills = lazy(() => import("@app/pages/Skills"));
 
 // Admin Pages
 const AdminLogin = lazy(() => import("./admin/Login"));
@@ -23,6 +24,7 @@ const HomeAdmin = lazy(() => import("./admin/HomeAdmin"));
 const ContactAdmin = lazy(() => import("./admin/ContactAdmin"));
 const SeoAdmin = lazy(() => import("./admin/SeoAdmin"));
 const SkillsAdmin = lazy(() => import("./admin/SkillsAdmin"));
+const SkillsAdminPage = lazy(() => import("./pages/admin/SkillsPage"));
 
 // Protected Route Component
 const ProtectedRoute = ({ children }: { children: JSX.Element }) => {
@@ -88,6 +90,20 @@ export default function App() {
                 <main className="flex-1">
                   <Suspense fallback={<PageLoader />}>
                     <Contact />
+                  </Suspense>
+                </main>
+                <Footer />
+              </>
+            }
+          />
+          <Route
+            path="/skills"
+            element={
+              <>
+                <Navbar />
+                <main className="flex-1">
+                  <Suspense fallback={<PageLoader />}>
+                    <Skills />
                   </Suspense>
                 </main>
                 <Footer />
@@ -200,6 +216,16 @@ export default function App() {
               <ProtectedRoute>
                 <Suspense fallback={<PageLoader />}>
                   <SkillsAdmin />
+                </Suspense>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/admin/skills-manage"
+            element={
+              <ProtectedRoute>
+                <Suspense fallback={<PageLoader />}>
+                  <SkillsAdminPage />
                 </Suspense>
               </ProtectedRoute>
             }
