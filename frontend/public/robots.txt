@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://thequyprofile.vercel.app/sitemap.xml
+Sitemap: https://www.nguyen-the-quy.website/sitemap.xml
