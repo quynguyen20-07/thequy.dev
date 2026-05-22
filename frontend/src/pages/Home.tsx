@@ -43,16 +43,15 @@ export default function Home() {
     <>
       <SEO
         title={
-          seo?.title ??
-          "Fullstack Developer | Node.js & NestJS Developer Vietnam"
+          seo?.title ?? "Nguyen The Quy (Quy Dev) – Fullstack Developer Vietnam"
         }
         description={
           seo?.description ??
-          "The Quy Nguyen – Fullstack Developer with 3.5+ years experience building scalable booking systems, AI-powered platforms, and high-performance backend services using Node.js, NestJS, and React. Available for hire in Vietnam."
+          "Nguyen The Quy (Quy Nguyen / Quy Dev) – Fullstack Developer with 3.5+ years experience building scalable booking systems, AI-powered platforms, and high-performance backend services using Node.js, NestJS, and React. Available for hire in Vietnam."
         }
         keywords={
           seo?.keywords ??
-          "Node.js developer Vietnam, NestJS backend developer, React portfolio developer, Fullstack developer Vietnam, The Quy Nguyen, booking platform developer, AI backend developer Da Nang"
+          "Nguyen The Quy, Quy Nguyen, The Quy, quy dev, quy developer, quy develop, quy nguyen developer, Node.js developer Vietnam, NestJS backend developer, React portfolio developer, Fullstack developer Vietnam, booking platform developer, AI backend developer Da Nang"
         }
         path={seo?.path ?? "/"}
       />

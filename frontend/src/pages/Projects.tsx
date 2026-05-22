@@ -33,14 +33,16 @@ export default function Projects() {
   return (
     <>
       <SEO
-        title={seo?.title ?? "Projects · Node.js & NestJS Developer Vietnam"}
+        title={
+          seo?.title ?? "Projects · Nguyen The Quy – Node.js & NestJS Developer"
+        }
         description={
           seo?.description ??
           "Explore The Quy Nguyen's portfolio projects: TripC AI Platform, RoomsBooked hotel booking system, DevPlus LMS, Driving Test Management System, and DigiEye AI Camera. Built with NestJS, React, PostgreSQL, Redis, and AWS."
         }
         keywords={
           seo?.keywords ??
-          "TripC AI platform NestJS, RoomsBooked hotel booking system, DevPlus LMS NestJS React, driving test management system, DigiEye AI camera system, Node.js developer Vietnam projects, NestJS backend developer portfolio"
+          "Nguyen The Quy projects, Quy Nguyen portfolio, quy dev projects, TripC AI platform NestJS, RoomsBooked hotel booking system, DevPlus LMS NestJS React, driving test management system, DigiEye AI camera system, Node.js developer Vietnam projects, NestJS backend developer portfolio"
         }
         path={seo?.path ?? "/projects"}
       />

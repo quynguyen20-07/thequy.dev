@@ -1,12 +1,15 @@
 // src/components/SEO.tsx
 // Reusable SEO component wrapping React Helmet Async
 // Usage: <SEO title="..." description="..." keywords="..." path="/" />
+import { Helmet } from "react-helmet-async";
 
-import { Helmet } from 'react-helmet-async'
+const SITE_URL = "https://www.nguyen-the-quy.website";
+const OG_IMAGE = `${SITE_URL}/og-image.jpg`;
+const SITE_NAME = "Nguyen The Quy – Fullstack Developer";
 
-const SITE_URL = 'https://thequyprofile.vercel.app'
-const OG_IMAGE = `${SITE_URL}/og-image.jpg`
-const SITE_NAME = 'The Quy Nguyen – Fullstack Developer'
+// Core name variants to inject into every page for consistent name-based ranking
+const NAME_KEYWORDS =
+  "Nguyen The Quy, The Quy Nguyen, Quy Nguyen, nguyen the quy, the quy, quy dev, quy developer, quy develop, quy nguyen developer";
 
 export interface SEOProps {
   title: string;
@@ -21,20 +24,55 @@ export default function SEO({
   title,
   description,
   keywords,
-  path = '/',
-  ogType = 'website',
+  path = "/",
+  ogType = "website",
   ogImage = OG_IMAGE,
 }: SEOProps) {
-  const canonicalUrl = `${SITE_URL}${path}`
-  const fullTitle = `${title} | The Quy Nguyen`
+  const canonicalUrl = `${SITE_URL}${path}`;
+  const fullTitle = `${title} | Nguyen The Quy`;
+  const fullKeywords = `${keywords}, ${NAME_KEYWORDS}`;
+
+  const personSchema = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: "Nguyen The Quy",
+    alternateName: [
+      "The Quy Nguyen",
+      "Quy Nguyen",
+      "The Quy",
+      "Quy Dev",
+      "Quy Developer",
+    ],
+    jobTitle: "Fullstack Developer",
+    url: SITE_URL,
+    image: OG_IMAGE,
+    sameAs: ["https://www.nguyen-the-quy.website"],
+  };
+
+  const breadcrumbSchema =
+    path !== "/"
+      ? {
+          "@context": "https://schema.org",
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Home", item: SITE_URL },
+            {
+              "@type": "ListItem",
+              position: 2,
+              name: title,
+              item: canonicalUrl,
+            },
+          ],
+        }
+      : null;
 
   return (
     <Helmet>
       {/* Primary Meta Tags */}
       <title>{fullTitle}</title>
       <meta name="description" content={description} />
-      <meta name="keywords" content={keywords} />
-      <meta name="author" content="The Quy Nguyen" />
+      <meta name="keywords" content={fullKeywords} />
+      <meta name="author" content="Nguyen The Quy" />
       <meta name="robots" content="index, follow" />
       <link rel="canonical" href={canonicalUrl} />
 
@@ -60,6 +98,16 @@ export default function SEO({
       {/* Extra structured data hints */}
       <meta name="geo.region" content="VN-DN" />
       <meta name="geo.placename" content="Da Nang, Vietnam" />
+
+      {/* JSON-LD: Person */}
+      <script type="application/ld+json">{JSON.stringify(personSchema)}</script>
+
+      {/* JSON-LD: Breadcrumb (sub-pages only) */}
+      {breadcrumbSchema && (
+        <script type="application/ld+json">
+          {JSON.stringify(breadcrumbSchema)}
+        </script>
+      )}
     </Helmet>
-  )
+  );
 }
