@@ -112,11 +112,11 @@ export const SKILL_CATEGORIES = [
  * About page SEO metadata
  */
 export const ABOUT_SEO = {
-  title: "About · Fullstack Developer Node.js NestJS Vietnam",
+  title: "About Nguyen The Quy – Quy Dev · Fullstack Developer Vietnam",
   description:
-    "The Quy Nguyen is a Fullstack Developer with 3.5+ years experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, TypeScript, and React. Based in Da Nang, Vietnam.",
+    "Nguyen The Quy (Quy Nguyen / Quy Dev) is a Fullstack Developer with 3.5+ years experience in building booking systems, AI platforms, and scalable backend services using Node.js, NestJS, TypeScript, and React. Based in Da Nang, Vietnam.",
   keywords:
-    "about The Quy Nguyen, NestJS developer Vietnam, Node.js fullstack engineer Da Nang, fullstack developer Vietnam biography, TypeScript backend developer, Redis caching expert, Docker AWS NestJS developer",
+    "about Nguyen The Quy, about Quy Nguyen, nguyen the quy biography, quy dev about, NestJS developer Vietnam, Node.js fullstack engineer Da Nang, fullstack developer Vietnam biography, TypeScript backend developer, Redis caching expert, Docker AWS NestJS developer",
   path: "/about",
 };
 

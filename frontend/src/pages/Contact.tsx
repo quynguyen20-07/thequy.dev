@@ -45,7 +45,7 @@ export default function Contact() {
         }
         keywords={
           seo?.keywords ??
-          "contact The Quy Nguyen, hire Node.js developer Vietnam, freelance NestJS developer, fullstack developer for hire Da Nang, contact fullstack developer Vietnam"
+          "contact Nguyen The Quy, contact Quy Nguyen, contact quy dev, hire Node.js developer Vietnam, freelance NestJS developer, fullstack developer for hire Da Nang, contact fullstack developer Vietnam"
         }
         path={seo?.path ?? "/contact"}
       />
