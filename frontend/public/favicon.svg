@@ -1,10 +1,26 @@
-<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <rect width="32" height="32" rx="8" fill="url(#grad)"/>
-  <text x="16" y="22" text-anchor="middle" font-family="Inter, sans-serif" font-weight="800" font-size="16" fill="white">Q</text>
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- soft gradient background -->
   <defs>
-    <linearGradient id="grad" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
-      <stop offset="0%" stop-color="#6366f1"/>
-      <stop offset="100%" stop-color="#4338ca"/>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0EA5E9"/>
+      <stop offset="100%" stop-color="#22C55E"/>
+    </linearGradient>
+
+    <linearGradient id="q" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FFFFFF"/>
+      <stop offset="100%" stop-color="#E0F2FE"/>
     </linearGradient>
   </defs>
+
+  <!-- background -->
+  <rect width="64" height="64" rx="16" fill="url(#bg)"/>
+
+  <!-- modern Q shape -->
+  <circle cx="32" cy="30" r="13" fill="none" stroke="url(#q)" stroke-width="6"/>
+
+  <!-- inner cut (gives modern depth) -->
+  <circle cx="32" cy="30" r="6" fill="rgba(255,255,255,0.25)"/>
+
+  <!-- Q tail (clean diagonal) -->
+  <path d="M40 38L50 48" stroke="#FFFFFF" stroke-width="6" stroke-linecap="round"/>
 </svg>
