@@ -3,7 +3,7 @@ import { api } from "@app/api/axiosInstance";
 
 export interface PageSeo {
   id?: string;
-  page: "home" | "about" | "contact" | "projects";
+  page: "home" | "about" | "contact" | "projects" | "skills";
   title: string;
   description: string;
   keywords: string;
